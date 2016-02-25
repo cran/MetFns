@@ -8,7 +8,7 @@ Selects data for a given visual meteor rate dataset and specified correction fac
 factors for clouds.
 }
 \usage{
-filter.F(data, F.low = 1, F.up = 3)
+filter.F(data,F.low = 1,F.up = 3)
 }
 \arguments{
   \item{data}{
@@ -50,6 +50,6 @@ Argument \code{data} has to consist of the column named "F".
 
 ## rate data for the year 2005
 data(rate05)
-rateOct<-filter.date(rate05,year=2005,month=10,day.beg=15,day.end=30)
+rateOct<-filter.datetime(rate05,year=2005,month.beg=10,day.beg=15,day.end=30)
 filter.F(rateOct,F.up=1.25)
 }

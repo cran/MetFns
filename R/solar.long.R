@@ -1,5 +1,8 @@
-solar.long<-function(year, month, day, time)
+solar.long<-function(year, month, day, time,prec=11)
 {
+   max=max.day(year,month)
+   if(!is.numeric(c(year,month,day,time,prec))|| any(c(month,day,prec)<1) || prec>11 || month>12 || day>max || time<0 || time>=24)
+     stop("invalid input parameter(s) specification:check year/month/day/time/precision")
    options(digits=14)
    T<-(ymd2jd(year,month,day)+(time+deltaT(year,month)/3600)/24-2451545)/365250
    L0<-4.8950627+6283.0758500*T-0.0000099*T^2
@@ -24,5 +27,6 @@ solar.long<-function(year, month, day, time)
    S3<-table3[1]*cos(table3[2]+table3[3]*T)
 
    C<-(S0+S1*T+S2*T^2+S3*T^3)*10^(-7)
-   round(((L0+C)*180/pi)%%360,3)
+   round(((L0+C)*180/pi)%%360,prec)
+  
 }

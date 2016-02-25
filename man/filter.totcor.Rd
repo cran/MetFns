@@ -7,7 +7,7 @@ Selection of visual meteor data by total correction factor
 Selects data for a given visual meteor rate dataset, specified shower, population index and total correction factor.
 }
 \usage{
-filter.totcor(data, shw, Ralpha = NULL, Delta = NULL, r, C = 5)
+filter.totcor(data,shw,Ralpha = NULL,Delta = NULL,r,C = 5)
 }
 \arguments{
   \item{data}{
@@ -64,9 +64,8 @@ Argument \code{data} has to consist of the columns named "SPO" (placed before th
 ## select observations of Orionids with maximum correction factor equal to 5
 
 ## rate data for the year 2006
-require(astroFns)
 data(rate06)
-rateOri<-filter.date(rate06,year=2006,month=10,day.beg=15,day.end=30)
+rateOri<-filter.datetime(rate06,year=2006,month.beg=10,day.beg=15,day.end=30)
 filter.totcor(rateOri,shw="ORI",r=2.5)
 }
 

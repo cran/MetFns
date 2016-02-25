@@ -3,11 +3,15 @@
 \title{
 Calculates zenithal hourly rate (ZHR)
 }
-\description{Calculation of average zenithal hourly rate of a meteor shower
-for a given rate data, specified shower, period of days, population index, length of time interval and ZHR correction.
+\description{Calculates and plots average zenithal hourly rate of a meteor shower
+for a given rate data, specified shower, period of days, population index, minimum and maximum bin sizes, number of meteors and ZHR
+correction.
 }
 \usage{
-zhr(data,year, month, day.beg,day.end,shw, r=NULL, Ralpha=NULL, Delta=NULL, k,c=1)
+zhr(data,year,month.beg,month.end=month.beg,day.beg,day.end=day.beg,
+time.beg=0,time.end=2359,shw,r=NULL,Ralpha=NULL,Delta=NULL,k1=0.01,k2=1,num,C=1,
+data2=NULL,add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,
+yinc=NULL)
 }
 \arguments{
   \item{data}{
@@ -16,14 +20,24 @@ zhr(data,year, month, day.beg,day.end,shw, r=NULL, Ralpha=NULL, Delta=NULL, k,c=
   \item{year}{
  numeric vector of length 4 specifying year.
 }
-  \item{month}{
-numeric vector specifying month of the year.
+  \item{month.beg}{
+numeric vector specifying the beginning month.
 }
-   \item{day.beg}{
-numeric vector specifying beginning day.
+  \item{month.end}{
+numeric vector specifying the ending month. By default, \code{month.end} is set to be equal to \code{month.beg}.
 }
-   \item{day.end}{
-numeric vector specifying ending day.
+  \item{day.beg}{
+numeric vector specifying the beginning day.
+}
+  \item{day.end}{
+numeric vector specifying the ending day. By default, \code{day.end} is set to be equal to \code{day.beg}.
+}
+
+  \item{time.beg}{
+numeric vector (0-2359) specifying lower boundary of time in hours and minutes, corresponding to \code{day.beg}. By default, \code{time.beg} is set to be equal to 0.
+}
+  \item{time.end}{
+numeric vector(0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
 }
    \item{shw}{
  character string consisting of three capital letters which represent meteor shower code.
@@ -37,14 +51,47 @@ numeric vector specifying ending day.
    \item{Delta}{
  numeric vector with value between -90 and +90, specifying declination of the radiant, in degrees.
 }
-   \item{k}{
- numeric vector specifying length of time interval in hours.
+   \item{k1}{
+  numeric vector specifying minimum bin size, in degrees of solar longitude. By default, it is   equal to 0.01.
 }
-   \item{c}{
+  \item{k2}{
+  numeric vector specifying maximum bin size, in degrees of solar longitude. By default, it is   equal to 1.
+}
+\item{num}{
+  numeric vector specifying total number of meteors per interval.
+}
+   \item{C}{
  numeric vector specifying value of ZHR correction. By default, it is equal to 1.
 }
+
+\item{data2}{
+ data frame consisting of corresponding visual meteor magnitude data.
 }
-\details{
+\item{add.plot}{
+  logical vector. If TRUE, the population index is plotted.
+}
+\item{xlim1}{
+  numeric vector specifying minimum value on x-axis.
+}
+\item{xlim2}{
+  numeric vector specifying maximum value on x-axis.
+}
+\item{xinc}{
+  numeric vector specifying increment between labels on x-axis.
+}
+\item{ylim1}{
+  numeric vector specifying minimum value on y-axis.
+}
+\item{ylim2}{
+  numeric vector specifying maximum value on y-axis.
+}
+\item{yinc}{
+  numeric vector specifying increment between labels on y-axis.
+} 
+}
+\details{Adaptive-bin size algorithm is used. It tries to maintain a used-defined optimum meteor
+number per bin. For the case that not enough meteors are available, a maximum bin size is used.
+
 Average zenithal hourly rate is calculated by the formula 
 
 \emph{ZHR=(c+sum_i n_i)/(sum_i T_{eff,i}/C_i), i=1,2,...,k}
@@ -80,21 +127,15 @@ Standard error of spatial number density is approximated with
 \emph{sigma_{rho}=sigma rho/ZHR}.
 
 If right ascension and declination of shower radiant are not specified, the values from the data frame
-\code{\link{radiant}} are used.
+\code{\link{radiant}} are used. If population index is not specified, it is calculated using the function \code{pop.index2} and then incorporated in the calculation of ZHR.
 
-Day is divided in subintervals of \emph{k} hours. For example, if \emph{k=12}, subintervals are [0,12) and [12,24).
-Zenithal hourly rate is calculated for each subinterval in the following manner: If middle of observing time 
-period belongs to the subinterval, corresponding data values are used in calculation of ZHR.  
 }
 \value{
 Data frame containing following numeric vectors
   \describe{
-   \item{day}{Day of the month}
-   \item{month}{Month of the year}
-   \item{year}{Year}
-   \item{start}{Left bound of time subinterval}
-   \item{stop}{Right bound of time subinterval}
-   \item{sollong}{Solar longitude corresponding to the middle of time subinterval}
+   \item{start}{factor  Calendar date and time in UTC of left bound of time interval}
+   \item{stop}{factor  Calendar date and time in UTC of right bound of time interval}
+   \item{sollong}{Solar longitude corresponding to the middle of time interval}
    \item{nINT}{Number of observing time intervals}
    \item{nSHW}{Number of observed meteors. String SHW is replaced with the code of meteor shower.}
    \item{ZHR}{Zenithal Hourly Rate}
@@ -102,14 +143,13 @@ Data frame containing following numeric vectors
    \item{density}{Spatial number density} 
    \item{dens.err}{Standard error of spatial number density}
 }
+If \code{add.plot} is TRUE, additionally xy plot of Zenithal Hourly Rate is made. Solar longitude is on x-axis and population index on y-axis. ZHR is represented with black filled circles and \emph{65\%} confidence intervals. Values of limits (minimum
+and maximum values) on x and y axis (\code{xlim1,xlim2,ylim1,ylim2}), as well as increments between the axis labels 
+(\code{xinc,yinc}) should be provided to function call. 
 }
 \references{
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
-
-Koschack R. and Rendtel J. (1990a). Determination of
-spatial number density and mass index from visual
-meteor observations (1). \emph{WGN, Journal of the IMO}, 18(2), 44 - 58.
 
 Bias, P.V. (2011). A Note on Poisson inference and extrapolations under low raw data
 and short interval observation conditions. \emph{WGN, Journal of the IMO},39:1, 14-19.
@@ -118,14 +158,42 @@ and short interval observation conditions. \emph{WGN, Journal of the IMO},39:1, 
 Kristina Veljkovic
 }
 \seealso{
-\code{\link{zhr.graph}},\code{\link{pop.index}}
+\code{\link{pop.index2}}
 }
 \examples{
-## select visual meteor data for observation of Orionids,period 20-24th October 2006, 
-## 12hrs time intervals, and calculate ZHR 
-data(rate06)
-rateOri<-filter(rate06,shw="ORI",year=2006, month=10, day.beg=20,day.end=24)
-zhr(rateOri,year=2006,month=10,day.beg=20,day.end=24,shw="ORI",r=2.5,k=12)
+##calculate ZHR for observations of 1997 Perseids, time period 10th August 19h to
+##13th August 7h, radiant elevation higher than 20 degrees, total correction smaller than 5
+##select 1997 Perseids, 28th July to 16th August, radiant elevation higher than 20 degrees
+## data(rate97)
+## rate<-filter(rate97,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,
+## shw="PER",h.low=20)
+## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
+## shw="PER",r=2.2,num=300)
+
+##make a graphic of ZHR
+##x-axis limits: min(sollong)=138.252, max(sollong)=140.561
+##y-axis limits: min(ZHR-st.err)=26.2, max(ZHR+st.err)=144.6
+
+## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
+## shw="PER",r=2.2,num=300,add.plot=TRUE,xlim1=138.2,xlim2=140.6,xinc=0.1,
+## ylim1=20,ylim2=160,yinc=20)
+
+##calculate ZHR for the same data using population index calculated from 
+##magnitude data
+## data(magn97)
+## magn<-filter(magn97,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,
+## shw="PER",h.low=20)
+## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
+## shw="PER",num=300,data2=magn)
+
+##make a graphic of ZHR
+##x-axis limits: min(sollong)=138.252, max(sollong)=140.561
+##y-axis limits: min(ZHR-st.err)=25.4, max(ZHR+1.96*st.err)=141.4
+## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
+## shw="PER",r=2.2,num=300,data2=magn,add.plot=TRUE,xlim1=138.2,xlim2=140.6,xinc=0.1,
+## ylim1=20,ylim2=160,yinc=20)
+
+
 }
 
 

@@ -7,7 +7,7 @@ Selection of visual meteor data by IMO observer code
 Selects data for a given visual meteor dataset and specified IMO observer code.
 }
 \usage{
-filter.imocode(data, imocode)
+filter.imocode(data,imocode)
 }
 \arguments{
   \item{data}{

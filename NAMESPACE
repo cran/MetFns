@@ -1,5 +1,5 @@
-export(filter.country, filter.date, filter.F, filter.gc, filter.h, filter.imocode, filter.mag, 
-filter.obsname, filter, filter.shw, filter.site, filter.sol, filter.time, filter.totcor, mag.distr,
-pop.index, read.rate, read.magn, solar.long, zhr.graph, zhr) 
+export(filter.country, filter.datetime, filter.F, filter.gc, filter.h, filter.imocode, filter.mag, 
+filter.obsname, filter, filter.shw, filter.site, filter.sol, filter.totcor, mag.distr,
+pop.index, pop.index2, read.rate, read.magn, solar.long, sollong_date, zhr) 
 
-import(astroFns, plotrix, graphics)
+import(astroFns, fBasics, graphics, lubridate, plotrix, spatial, stats, utils)

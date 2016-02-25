@@ -1,7 +1,7 @@
 filter.obsname<-function(data,name,fname)
 {
    if(!is.data.frame(data) || !is.character(c(name,fname)) || !grepl("^[a-zA-Z]+$",name) || !grepl("^[a-zA-Z]+$",fname))
-      stop("invalid input parameter(s) specification")
+      stop("invalid input parameter(s) specification: check data/name/fname")
    
    data(vmdbpers,envir=environment())
    vmdbpers<-get("vmdbpers",envir=environment()) 

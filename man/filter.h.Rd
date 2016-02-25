@@ -7,7 +7,7 @@ Selection of visual meteor data by radiant elevation
 Selects data for a given visual meteor dataset, specified shower and its radiant elevation or interval of radiant elevations.
 }
 \usage{
-filter.h(data, shw, Ralpha = NULL, Delta = NULL, h.low = 10, h.up = 90)
+filter.h(data,shw,Ralpha = NULL,Delta = NULL,h.low = 10,h.up = 90)
 }
 \arguments{
   \item{data}{
@@ -63,13 +63,12 @@ Also, \code{data} has to consist of the columns named "long", "EW", "lat", "day"
 ## period between 1-20th August 2011
 
 ## rate data for the year 2011
-require(astroFns)
 data(rate11)
-ratePer<-filter.date(rate11,year=2011,month=8,day.beg=1,day.end=20)
+ratePer<-filter.datetime(rate11,year=2011,month.beg=8,day.beg=1,day.end=20)
 filter.h(ratePer,shw="PER", h.low=30,h.up=60)
 
 ## magnitude data for the year 2011 
 data(magn11)    
-magnPer<-filter.date(magn11,year=2011,month=8,day.beg=1,day.end=20)
+magnPer<-filter.datetime(magn11,year=2011,month.beg=8,day.beg=1,day.end=20)
 filter.h(magnPer,shw="PER",h.low=30,h.up=60)
 }

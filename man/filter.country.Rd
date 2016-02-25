@@ -7,7 +7,7 @@ Selection of visual meteor data by country
 Selects data for a given visual meteor dataset and specified country.
 }
 \usage{
-filter.country(data, country)
+filter.country(data,country)
 }
 \arguments{
   \item{data}{

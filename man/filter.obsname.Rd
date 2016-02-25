@@ -7,7 +7,7 @@ Selection of visual meteor data by observer's first and last name
 Selects data for a given visual meteor dataset and specified observer's first and last name.
 }
 \usage{
-filter.obsname(data, name, fname)
+filter.obsname(data,name,fname)
 }
 \arguments{
   \item{data}{

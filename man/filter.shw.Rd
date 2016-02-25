@@ -7,7 +7,7 @@ Selection of visual meteor data by shower code
 Selects data for a given visual meteor dataset and specified shower code.
 }
 \usage{
-filter.shw(data, shw)
+filter.shw(data,shw)
 }
 \arguments{
   \item{data}{

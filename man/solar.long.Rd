@@ -7,7 +7,7 @@ Calculation of solar longitude
 Calculates solar longitude with respect to the equinox of 2000.0 for given year, month, day and time.
 }
 \usage{
-solar.long(year, month, day, time)
+solar.long(year,month,day,time,prec=11)
 }
 \arguments{
   \item{year}{
@@ -22,9 +22,12 @@ numeric vector specifying day.
    \item{time}{
 numeric vector specifying time in hours.
 }
+\item{prec}{
+numeric vector specifying number of decimals of calculated solar longitude. By default it is equal to 11.
+}
 }
 \value{
-\code{solar.long} returns numeric vector with a value between 0 and 359.999.
+\code{solar.long} returns numeric vector with a value between 0 and 360.
 }
 \references{
 Steyaert C. (1991). Calculating the Solar Longitude 2000.0, \emph{WGN, Journal of the IMO}, 19:2, 31-34.
@@ -36,8 +39,7 @@ Kristina Veljkovic
 \code{\link{filter.sol}}
 }
 \examples{
-## calculate solar longitude for June 22, 2006, at 4h UT.
-require(astroFns)
-solar.long(year=2006,month=6,day=22,time=4)
+## calculate solar longitude for June 22, 2006, at 4h UT, rounded to 3 decimals
+solar.long(year=2006,month=6,day=22,time=4,prec=3)
 }
 

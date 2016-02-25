@@ -7,7 +7,7 @@ Selection of visual meteor data by observing site
 Selects data for a given visual meteor dataset and specified observing site.
 }
 \usage{
-filter.site(data, site)
+filter.site(data,site)
 }
 \arguments{
   \item{data}{

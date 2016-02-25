@@ -8,8 +8,8 @@ Selects data for a given visual meteor dataset and specified geographical coordi
 or interval of geographical coordinates.
 }
 \usage{
-filter.gc(data, long.low = 0, long.up = 180, ew = c("E", "W"), 
-          lat.low = 0, lat.up = 90, ns = c("N", "S"))
+filter.gc(data,long.low = 0,long.up = 180,ew = c("E", "W"),lat.low = 0,
+lat.up = 90,ns = c("N", "S"))
 }
 \arguments{
   \item{data}{

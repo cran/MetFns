@@ -1,9 +1,9 @@
 filter.shw<-function(data, shw)
 {
   if(!is.data.frame(data) || !is.character(shw) || nchar(shw)!=3 || !grepl("^[A-Z]+$",shw) )
-      stop("invalid input parameter(s) specification")
+      stop("invalid input parameter(s) specification: check data/shw ")
       
-  if(!is.na(match("zero",colnames(data)))){
+  if(!is.na(match("zero",colnames(data)))){          
      data.shw<-data[data$Shw==shw,]
  }
   else{
