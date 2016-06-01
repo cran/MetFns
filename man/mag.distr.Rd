@@ -4,7 +4,7 @@
 Summarized magnitude distribution
 }
 \description{Table and graphical representation of summarized magnitude distribution for a given magnitude dataset,
-specified meteor shower, days and time period.
+specified meteor shower and time period.
 }
 \usage{
 mag.distr(data,year,month.beg,month.end=month.beg,day.beg,day.end=day.beg,

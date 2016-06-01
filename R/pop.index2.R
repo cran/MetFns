@@ -49,6 +49,8 @@ add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,yinc=NULL)
                  pop.index<-spline(popind$avdeltam,popind$r,method="natural",xout=mean.deltam)$y
                  r.error<-round(krigeInterp(popind.err$r,log(popind.err$n),popind.err$r.err,xo=pop.index,
                                              yo=log(sum(datasel$N)),extrap=TRUE)$z,6)
+                 r.error<-ifelse(r.error<0,0,r.error)
+                 r.error<-ifelse(pop.index<1.5|pop.index>3.5,NA,r.error)
          
                  start<-as.character(sollong_date(year,p1,month.beg,month.end,                                                                                            day.beg,day.end,time.beg,time.end))
    

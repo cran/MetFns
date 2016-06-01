@@ -43,11 +43,13 @@ the data, day corresponding to the middle of the observing time period is used.
 If argument \code{day.end} is not provided, the function \code{filter.datetime} selects data for a given date, 
 otherwise it selects data for a period of days, bounded by \code{day.beg} and \code{day.end}, in one or more months, bounded by \code{month.beg} and \code{month.end}. Arguments \code{time.beg} and 
 \code{time.end} correspond to \code{day.beg} and \code{day.end}, respectively. If they are provided, the middle of the observing time period is used in data selection.
+
+Data selection is performed using \code{filter.sol} which filters data by solar longitudes corresponding to specified dates.
 }
 
 \value{
 \code{filter.datetime} returns data frame with the same number of columns as the argument \code{data},
-containing observations which correspond to the specified time period, date or period of days.
+containing observations which correspond to the specified time period.
 }
 \references{
 \url{http://www.imo.net/data/visual}
@@ -58,9 +60,12 @@ For Meteor Observers}. IMO, Potsdam.
 \author{
 Kristina Veljkovic
 }
+\note{
+Argument \code{data} has to consist of the columns named "year" and "sollong".
+}
 
 \seealso{
-\code{\link{filter}}
+\code{\link{filter}}, \code{\link{filter.sol}} 
 }
 \examples{
 ## select visual meteor data for the period from 5-15 August 2007

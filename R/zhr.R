@@ -1,9 +1,9 @@
 zhr<-function(data,year,month.beg,month.end=month.beg,day.beg,day.end=day.beg,time.beg=0,
-time.end=2359,shw,r=NULL,Ralpha=NULL,Delta=NULL,k1=0.01,k2=1,num,C=1,data2=NULL,
+time.end=2359,shw,r=NULL,Ralpha=NULL,Delta=NULL,k1=0.01,k2=1,num,c=1,data2=NULL,
 add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,yinc=NULL)
 { 
-   if(!is.data.frame(data) || (is.null(r)&&is.null(data2)) || !is.numeric(c(k1,k2,C,num)) || !is.logical(add.plot))
-      stop("invalid input parameter(s) specification: check data/r/data2/k1/k2/C/num/add.plot")
+   if(!is.data.frame(data) || (is.null(r)&&is.null(data2)) || !is.numeric(c(k1,k2,c,num)) || !is.logical(add.plot))
+      stop("invalid input parameter(s) specification: check data/r/data2/k1/k2/c/num/add.plot")
    
    data(shw_list,envir=environment())
    shw_list<-get("shw_list",envir=environment())   
@@ -53,8 +53,8 @@ add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,yinc=NULL)
           
                  nSHW<-sum(datasel$N)
                  T<-sum((datasel$sine.h*datasel$Teff)/(datasel$F*r^(6.50-datasel$lmg)))
-                 ZHR<-(nSHW+C)/T
-                 st.err<-ZHR/sqrt(nSHW+C)
+                 ZHR<-(nSHW+c)/T
+                 st.err<-ZHR/sqrt(nSHW+c)
                  density<-(10.65*r-12.15)*ZHR/(3600*178700*r^(-1.82)*V)*10^9
                  dens.err<-density*st.err/ZHR
   

@@ -34,7 +34,7 @@ For Meteor Observers}. IMO, Potsdam.
 Kristina Veljkovic
 }
 \note{
-Argument \code{data} has to consist of the column named "sollong".
+Argument \code{data} has to consist of the columns named "year" and "sollong".
 }
 \seealso{
 \code{\link{filter}},\code{\link{solar.long}}

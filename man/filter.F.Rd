@@ -1,11 +1,11 @@
 \name{filter.F}
 \alias{filter.F}
 \title{
-Selection of visual meteor data by correction factor for clouds
+Selection of visual meteor data by correction factor for field-of-view obstruction
 }
 \description{
 Selects data for a given visual meteor rate dataset and specified correction factor or interval of correction 
-factors for clouds.
+factors for field-of-view obstruction.
 }
 \usage{
 filter.F(data,F.low = 1,F.up = 3)
@@ -15,19 +15,19 @@ filter.F(data,F.low = 1,F.up = 3)
 data frame consisting of visual meteor rate data.
 }
   \item{F.low}{
-numeric vector with value between 1 (default) and 3, specifying lower boundary of correction factor for clouds. 
+numeric vector with value between 1 (default) and 3, specifying lower boundary of correction factor for field-of-view obstruction. 
 }
   \item{F.up}{
-numeric vector with value between 1 and 3 (default), specifying upper boundary of correction factor for clouds.
+numeric vector with value between 1 and 3 (default), specifying upper boundary of correction factor for field-of-view obstruction.
 }
 }
 \details{
-Correction factor for clouds is calculated by the formula
-\emph{F=1/(1-p)}, where \emph{p} is a fraction (\emph{0<p<1}) of clouds covering observing field of view.
+Correction factor \emph{F} is calculated by the formula
+\emph{F=1/(1-p)}, where \emph{p} is a fraction (\emph{0<p<1}) of field-of-view obstruction.
 }
 \value{
 \code{filter.F} returns data frame with the same number of columns as the argument \code{data},
-containing observations with the correction factors for clouds between \code{F.low} and \code{F.up}.
+containing observations with the correction factors for field-of-view obstruction between \code{F.low} and \code{F.up}.
 }
 \references{
 \url{http://www.imo.net/data/visual}
@@ -46,7 +46,7 @@ Argument \code{data} has to consist of the column named "F".
 }
 \examples{
 ## select visual meteor data for the period between 15-30th October 2005 and 
-## correction factor for clouds below 1.25 (which corresponds to 20% of clouds)
+## correction factor for field-of-view obstruction below 1.25 (p=20%)
 
 ## rate data for the year 2005
 data(rate05)

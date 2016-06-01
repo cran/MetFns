@@ -4,7 +4,7 @@
 Calculation of population index
 }
 \description{Calculates and plots population index of a meteor shower
-for a given magnitude data, specified period of days, magnitude values and bin size.
+for a given magnitude data, specified time period, magnitude values and bin size.
 }
 \usage{
 pop.index(data,year,month.beg,month.end=month.beg,day.beg,day.end=day.beg,
@@ -34,7 +34,7 @@ numeric vector specifying the ending day. By default, \code{day.end} is set to b
 numeric vector (0-2359) specifying lower boundary of time in hours and minutes, corresponding to \code{day.beg}. By default, \code{time.beg} is set to be equal to 0.
 }
   \item{time.end}{
-numeric vector(0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
+numeric vector (0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
 }
 
    \item{shw}{
@@ -89,14 +89,14 @@ Data frame containing following vectors
 \describe{
    \item{start}{factor  Calendar date and time in UTC at the time interval beginning}
    \item{stop}{factor  Calendar date and time in UTC at the time interval end}
-   \item{sollong}{Solar longitude corresponding to the middle of time interval}
+   \item{sollong}{numeric Solar longitude corresponding to the middle of time interval}
    \item{mag}{factor  Range of magnitude values}
-   \item{nINT}{Number of observing time intervals}
-   \item{nSHW}{Number of observed meteors belonging to the shower}
-   \item{pop.index}{Population index}
-   \item{sigma.r}{Standard error of population index}
+   \item{nINT}{numeric Number of observing time intervals}
+   \item{nSHW}{numeric Number of observed meteors belonging to the shower}
+   \item{pop.index}{numeric Population index}
+   \item{sigma.r}{numeric Standard error of population index}
 }
-If \code{add.plot} is TRUE, additionally xy plot of population index is made. Solar longitude is on x-axis and population index on y-axis. Population index is represented with black filled circles and \emph{65\%} confidence intervals. Values of limits (minimum and maximum values) on x and y axis (\code{xlim1,xlim2,ylim1,ylim2}), as well as increments between the axis labels (\code{xinc,yinc}) should be provided to function call. 
+If \code{add.plot} is TRUE, additionally xy plot of population index is made. Solar longitude is on x-axis and population index on y-axis. Population index is represented with black filled circles and \emph{68\%} confidence intervals. Values of limits (minimum and maximum values) on x and y axis (\code{xlim1,xlim2,ylim1,ylim2}), as well as increments between the axis labels (\code{xinc,yinc}) should be provided to function call. 
 }      
 \references{
 
@@ -123,19 +123,25 @@ the range of magnitude values printed in results.
 \code{\link{mag.distr}},\code{\link{pop.index2}},\code{\link{zhr}}
 }
 \examples{
-## calculate and plot population index for observations of 1997 Perseids, time period 
-## 28th July to 16th August, radiant elevation higher than 20 degrees,
-## total correction smaller than 5, bin size 1 degree
+## calculate population index for observations of 1997 Perseids, time period 
+## 27th July to 16th August, radiant elevation higher than 20 degrees,
+## total correction factor smaller than 5, bin size 1 degree
+## First select magnitude data for Perseids activity - time period 15th July to 24th August, 
+## radiant elevation higher than 20 degrees, total correction factor smaller than 5
 ## data(magn97)
-## magn<-filter(magn97,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,
+## magn<-filter(magn97,year=1997,month.beg=7,month.end=8,day.beg=15,day.end=24,
 ## shw="PER",h.low=20)
-## pop.index(magn,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,shw="PER",k=1)
+## pop.index(magn,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,shw="PER",k=1)
 
 ## make graphic of population index
-##x-axis limits: min(sollong)=125.5, max(sollong)=143.5
-##y-axis limits: min(pop.index-sigma.r)=1.99,max(pop.index+sigma.r)=2.8
-## pop.index(magn,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,shw="PER",
-## k=1,add.plot=TRUE,xlim1=125,xlim2=144,xinc=1,ylim1=1.9,ylim2=2.9,yinc=0.1)
+## x-axis limits: min(sollong)=124.549, max(sollong)=144.111
+## y-axis limits: min(pop.index-sigma.r)=1.94,max(pop.index+sigma.r)=2.81
+## pop.index(magn,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,shw="PER",
+## k=1,add.plot=TRUE,xlim1=124,xlim2=145,xinc=1,ylim1=1.9,ylim2=2.9,yinc=0.1)
+
+
+
+
 }
 
 

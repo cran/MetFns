@@ -4,7 +4,7 @@
 Calculation of date and time corresponding to given solar longitude
 }
 \description{
-Calculates calendar date and time corresponding to specified value of solar longitude and year within given month (s), day (s) and time period.
+Calculates calendar date and time corresponding to specified values of solar longitude and year.
 }
 \usage{
 sollong_date(year,value,month.beg=1,month.end=12,day.beg=1,day.end=31,
@@ -33,7 +33,7 @@ numeric vector specifying the ending day. By default, \code{day.end} is set to b
 numeric vector (0-2359) specifying lower boundary of time in hours and minutes, corresponding to \code{day.beg}. By default, \code{time.beg} is set to be equal to 0.
 }
   \item{time.end}{
-numeric vector(0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
+numeric vector (0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
 }
 }
 \value{
@@ -48,7 +48,7 @@ Kristina Veljkovic
 }
 \examples{
 ## calculate date and time corresponding to 0.9 solar longitude for year 2000, 
-##search between 1 and 31 March
+## search between 1 and 31 March
 sollong_date(year=2000,value=0.9,month.beg=3,month.end=3,day.beg=1,day.end=31)
 }
 

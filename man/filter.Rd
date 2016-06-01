@@ -4,8 +4,9 @@
 Global filter
 }
 \description{
-Various data selections for a given visual meteor data. Wrapper function for filters by shower code, date, time period, IMO observer code, observer's name, geographical coordinates, site, country, limiting magnitude, correction 
-factor for clouds, solar longitude, radiant elevation and maximum correction factor.
+Various data selections for a given visual meteor data. Wrapper function for filters by shower code, date, time period, 
+IMO observer code, observer's name, geographical coordinates, site, country, limiting magnitude, correction 
+factor for field-of-view obstruction, solar longitude, radiant elevation and total correction factor.
 }
 \usage{
 filter(data,year = NULL,month.beg = NULL,month.end=month.beg,day.beg = NULL,
@@ -77,20 +78,20 @@ character string specifying name of the observing site.
 character string specifying name of the country.
 }
   \item{mag.low}{
-numeric vector with value between 2.0 (default) and 8.0, specifying lower 
+numeric vector with value between 3.0 (default) and 8.0, specifying lower 
 boundary of limiting magnitude.
 }
   \item{mag.up}{
-numeric vector with value between 2.0 and 8.0 (default), specifying upper 
+numeric vector with value between 3.0 and 8.0 (default), specifying upper 
 boundary of limiting magnitude.
 }
   \item{F.low}{
 numeric vector with value between 1.0 (default) and 3.0, specifying lower 
-boundary of correction factor for clouds.
+boundary of correction factor for field-of-view obstruction.
 }
   \item{F.up}{
 numeric vector with value between 1.0 and 3.0 (default), specifying upper 
-boundary of correction factor for clouds.
+boundary of correction factor for field-of-view obstruction.
 }
   \item{sol.low}{
 numeric vector with value between 0 (default) and 360, specifying lower 
@@ -120,7 +121,7 @@ of radiant elevation in degrees.
 numeric vector specifying population index of a meteor shower.
 }
   \item{C}{
-numeric vector specifying maximum correction factor. C=5 is set as a default value.
+numeric vector specifying total correction factor. C=5 is set as a default value.
 }
 }
 \details{
@@ -138,13 +139,14 @@ Kristina Veljkovic
 }
 \seealso{
 \code{\link{filter.shw}}, \code{\link{filter.datetime}}, \code{\link{filter.imocode}},
-\code{\link{filter.obsname}}, \code{\link{filter.site}}, \code{\link{filter.country}}, \code{\link{filter.gc}}, \code{\link{filter.mag}}, \code{\link{filter.F}},
+\code{\link{filter.obsname}}, \code{\link{filter.site}}, 
+\code{\link{filter.country}}, \code{\link{filter.gc}}, \code{\link{filter.mag}}, \code{\link{filter.F}},
 \code{\link{filter.sol}}, \code{\link{filter.h}}, \code{\link{filter.totcor}}   
 }
 \examples{
 ## select rate and magnitude data for observations of 1997 Perseids, time period 28th July
 ## to 16th August, radiant elevation higher than 20 degrees, 
-## total correction smaller than 5(default)
+## total correction factor smaller than 5(default)
 data(rate97)
 filter(rate97,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,shw="PER",h.low=20)
 

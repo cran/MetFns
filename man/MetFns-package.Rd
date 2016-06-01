@@ -6,16 +6,16 @@
 Analysis of Visual Meteor Data
 }
 \description{
-Visual meteor data, functions for selection of the data, calculations of 
-Zenithal Hourly Rate (ZHR), solar longitude, population index and graphical 
-representation of ZHR and magnitude distribution
+Functions for selection of visual meteor data, calculations of Zenithal Hourly 
+Rate (ZHR) and population index, graphics of population index, ZHR and 
+magnitude distribution.
 }
 \details{
 \tabular{ll}{
 Package: \tab MetFns\cr
 Type: \tab Package\cr
-Version: \tab 1.0\cr
-Date: \tab 2014-09-16\cr
+Version: \tab 2.1.0\cr
+Date: \tab 2016-06-01\cr
 License: \tab GPL-2 | GPL-3\cr
 }
 }

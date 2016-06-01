@@ -9,7 +9,7 @@ correction.
 }
 \usage{
 zhr(data,year,month.beg,month.end=month.beg,day.beg,day.end=day.beg,
-time.beg=0,time.end=2359,shw,r=NULL,Ralpha=NULL,Delta=NULL,k1=0.01,k2=1,num,C=1,
+time.beg=0,time.end=2359,shw,r=NULL,Ralpha=NULL,Delta=NULL,k1=0.01,k2=1,num,c=1,
 data2=NULL,add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,
 yinc=NULL)
 }
@@ -37,7 +37,7 @@ numeric vector specifying the ending day. By default, \code{day.end} is set to b
 numeric vector (0-2359) specifying lower boundary of time in hours and minutes, corresponding to \code{day.beg}. By default, \code{time.beg} is set to be equal to 0.
 }
   \item{time.end}{
-numeric vector(0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
+numeric vector (0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
 }
    \item{shw}{
  character string consisting of three capital letters which represent meteor shower code.
@@ -60,7 +60,7 @@ numeric vector(0-2359) specifying upper boundary of time in hours and minutes, c
 \item{num}{
   numeric vector specifying total number of meteors per interval.
 }
-   \item{C}{
+   \item{c}{
  numeric vector specifying value of ZHR correction. By default, it is equal to 1.
 }
 
@@ -98,18 +98,18 @@ Average zenithal hourly rate is calculated by the formula
 
 where \emph{k} is the number of observing periods, \emph{n_i} - the raw number of meteors seen by each observer in
 observing period \emph{i}, \emph{T_{eff,i}} - the effective time or amount of time an observer actually scans the sky for meteors
-during observing period \emph{i}, and \emph{C_i} - a correction factor that accounts for all the imperfections in the observing
+during observing period \emph{i}, and \emph{C_i} - total correction factor that accounts for all the imperfections in the observing
 period \emph{i} such as clouds, low radiant, low limiting magnitude.
 
-Correction factor is equal to 
+Total correction factor is equal to 
 
 \emph{C_i=r^(6.5-lmg_i)F_i/sin(h_i)},
 
-where \emph{r} is population index, \emph{lmg_i} limiting magnitude, \emph{F_i} correction  factor for clouds,
+where \emph{r} is population index, \emph{lmg_i} limiting magnitude, \emph{F_i} correction  factor for field-of-view obstruction,
 \emph{h_i} radiant elevation for each observer in observing period \emph{i}.
 
 In the numerator, \emph{c} is included to correct for the asymmetric high and low end possibilities in
-a Poisson distribution (distribution of number of observed meteors).
+a Poisson distribution (distribution of the number of observed meteors).
 
 Standard error of the average zenithal rate is calculated by the formula
 
@@ -131,19 +131,19 @@ If right ascension and declination of shower radiant are not specified, the valu
 
 }
 \value{
-Data frame containing following numeric vectors
+Data frame containing following vectors
   \describe{
    \item{start}{factor  Calendar date and time in UTC of left bound of time interval}
    \item{stop}{factor  Calendar date and time in UTC of right bound of time interval}
-   \item{sollong}{Solar longitude corresponding to the middle of time interval}
-   \item{nINT}{Number of observing time intervals}
-   \item{nSHW}{Number of observed meteors. String SHW is replaced with the code of meteor shower.}
-   \item{ZHR}{Zenithal Hourly Rate}
-   \item{st.err}{Standard error of ZHR}
-   \item{density}{Spatial number density} 
-   \item{dens.err}{Standard error of spatial number density}
+   \item{sollong}{numeric Solar longitude corresponding to the middle of time interval}
+   \item{nINT}{numeric Number of observing time intervals}
+   \item{nSHW}{numeric Number of observed meteors. String SHW is replaced with the code of meteor shower.}
+   \item{ZHR}{numeric Zenithal Hourly Rate}
+   \item{st.err}{numeric Standard error of ZHR}
+   \item{density}{numeric Spatial number density} 
+   \item{dens.err}{numeric Standard error of spatial number density}
 }
-If \code{add.plot} is TRUE, additionally xy plot of Zenithal Hourly Rate is made. Solar longitude is on x-axis and population index on y-axis. ZHR is represented with black filled circles and \emph{65\%} confidence intervals. Values of limits (minimum
+If \code{add.plot} is TRUE, additionally xy plot of Zenithal Hourly Rate is made. Solar longitude is on x-axis and population index on y-axis. ZHR is represented with black filled circles and \emph{68\%} confidence intervals. Values of limits (minimum
 and maximum values) on x and y axis (\code{xlim1,xlim2,ylim1,ylim2}), as well as increments between the axis labels 
 (\code{xinc,yinc}) should be provided to function call. 
 }
@@ -161,37 +161,41 @@ Kristina Veljkovic
 \code{\link{pop.index2}}
 }
 \examples{
-##calculate ZHR for observations of 1997 Perseids, time period 10th August 19h to
-##13th August 7h, radiant elevation higher than 20 degrees, total correction smaller than 5
-##select 1997 Perseids, 28th July to 16th August, radiant elevation higher than 20 degrees
+## calculate ZHR for observations of 1997 Perseids, time period 
+## 27th July to 16th August, radiant elevation higher than 20 degrees,
+## total correction factor smaller than 5, bin size 1 degree, population index 2.2
+## First select rate data for Perseids activity - time period 15th July to 24th August, 
+## radiant elevation higher than 20 degrees, total correction factor smaller than 5
 ## data(rate97)
-## rate<-filter(rate97,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,
+## rate<-filter(rate97,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,
 ## shw="PER",h.low=20)
-## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
-## shw="PER",r=2.2,num=300)
+## zhr(rate,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,
+## shw="PER",r=2.2,k1=1,num=300)
 
-##make a graphic of ZHR
-##x-axis limits: min(sollong)=138.252, max(sollong)=140.561
-##y-axis limits: min(ZHR-st.err)=26.2, max(ZHR+st.err)=144.6
+## make graphic of ZHR
+## x-axis limits: min(sollong)=124.549, max(sollong)=144.110
+## y-axis limits: min(ZHR-st.err)=5.1,max(ZHR+st.err)=68.6
+## zhr(rate,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,shw="PER",r=2.2,
+## k1=1,num=300,add.plot=TRUE,xlim1=124,xlim2=145,xinc=1,ylim1=5,ylim2=70,yinc=5)
 
-## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
-## shw="PER",r=2.2,num=300,add.plot=TRUE,xlim1=138.2,xlim2=140.6,xinc=0.1,
-## ylim1=20,ylim2=160,yinc=20)
 
-##calculate ZHR for the same data using population index calculated from 
-##magnitude data
+
+## calculate ZHR around maximum activity of 1997 Perseids, time period 10th August 19h
+## to 14th August 7h, radiant elevation higher than 20 degrees, total correction 
+## factor smaller than 5 and population index calculated from magnitude data
 ## data(magn97)
-## magn<-filter(magn97,year=1997,month.beg=7,month.end=8,day.beg=28,day.end=16,
+## magn<-filter(magn97,year=1997,month.beg=7,month.end=8,day.beg=15,day.end=24,
 ## shw="PER",h.low=20)
-## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
-## shw="PER",num=300,data2=magn)
+## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=14,time.beg=1900,time.end=700,
+## shw="PER",data2=magn,num=300)
 
-##make a graphic of ZHR
-##x-axis limits: min(sollong)=138.252, max(sollong)=140.561
-##y-axis limits: min(ZHR-st.err)=25.4, max(ZHR+1.96*st.err)=141.4
-## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=13,time.beg=1900,time.end=700,
-## shw="PER",r=2.2,num=300,data2=magn,add.plot=TRUE,xlim1=138.2,xlim2=140.6,xinc=0.1,
-## ylim1=20,ylim2=160,yinc=20)
+## make graphic of ZHR around max activity of 1997 Perseids
+## x-axis limits: min(sollong)=138.252, max(sollong)=141.471
+## y-axis limits: min(ZHR-st.err)=24.7,max(ZHR+st.err)=141.4
+## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=14,time.beg=1900,time.end=700,
+## shw="PER",data2=magn,num=300,add.plot=TRUE,xlim1=138.2,xlim2=141.5,xinc=0.1,
+## ylim1=20,ylim2=150,yinc=10)
+
 
 
 }

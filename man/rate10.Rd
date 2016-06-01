@@ -26,7 +26,7 @@ Visual meteor rate data for the year 2010.
     \item{\code{fovRA}}{numeric  Right ascension of the center of the field of view}
     \item{\code{fovDEC}}{numeric  Declination of the center of the field of view}
     \item{\code{Teff}}{numeric  Effective observing time}
-    \item{\code{F}}{numeric  Correction factor for clouds}
+    \item{\code{F}}{numeric  Correction factor for field-of-view obstruction}
     \item{\code{lmg}}{numeric  Limiting magnitude}
     \item{\code{SPO}}{numeric  Number of observed sporadics}
     \item{\code{Shw1}}{factor  Abbreviation of the first shower} 

@@ -11,7 +11,9 @@ add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,yinc=NULL)
    
 
    data.shw<-filter(data,shw=shw,sol.low=sol1, sol.up=sol2)
-   points=seq(sol1,sol2,by=k)
+   points<-seq(sol1,sol2,by=k)
+   points<-if(!sol2%in%points) {points<-c(points,sol2)}
+   
    Solar.long<-Vectorize(solar.long) 
    Dec.time<-Vectorize(dec.time)
 
@@ -67,7 +69,7 @@ add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,yinc=NULL)
                  counts<-t(apply(mag.distrib,2,sum))
                  cum.freq<-cumsum(counts)
 
-                 ind<-mag.val %in% mag.range & (!counts %in% seq(0,2,by=0.5)) & mag.val<=5
+                 ind<-mag.val %in% mag.range & (counts>=3) & mag.val<=5
 
                  m<-mag.val[ind]
                  results$mag[i]<-ifelse(length(m)>0,paste(m[1],":",m[length(m)],sep=""),"-6:7")
