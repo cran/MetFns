@@ -27,8 +27,6 @@ is already used, the observer gets modified IMO code.
 containing values corresponding to the observer with specified  IMO code. 
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

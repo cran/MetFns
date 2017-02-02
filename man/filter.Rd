@@ -129,8 +129,6 @@ Depending on the given arguments, the function \code{filter} calls one or more
 particular filters for selection of visual meteor data.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

@@ -44,6 +44,6 @@ Visual meteor rate data for the year 2007.
   }
 }
 \source{
-Visual Meteor Database, \url{http://www.imo.net/data/visual}
+Visual Meteor Database, \url{http://www.imo.net/observations/methods/visual-observation/}
 }
 

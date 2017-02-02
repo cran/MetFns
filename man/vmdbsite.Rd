@@ -25,5 +25,5 @@ The data consists of a list of observing sites.
   }
 }
 \source{
-Visual Meteor Database, \url{http://www.imo.net/data/visual}
+Visual Meteor Database, \url{http://www.imo.net/observations/methods/visual-observation}
 }

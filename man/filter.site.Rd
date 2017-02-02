@@ -25,8 +25,6 @@ List of site names can be found in the dataframe \code{\link{vmdbsite}}.
 containing observations which correspond to specified observing site.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

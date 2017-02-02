@@ -25,8 +25,6 @@ numeric vector with value between 0 and 360 (default), specifying upper boundary
 containing observations with solar longitudes between \code{sol.low} and \code{sol.up}.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

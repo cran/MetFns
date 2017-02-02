@@ -25,8 +25,6 @@ numeric vector with value between 3 and 8 (default), specifying upper boundary o
 containing observations with the limiting magnitudes between \code{mag.low} and \code{mag.up}.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

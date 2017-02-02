@@ -30,8 +30,6 @@ Correction factor \emph{F} is calculated by the formula
 containing observations with the correction factors for field-of-view obstruction between \code{F.low} and \code{F.up}.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

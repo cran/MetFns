@@ -52,8 +52,6 @@ Data selection is performed using \code{filter.sol} which filters data by solar 
 containing observations which correspond to the specified time period.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

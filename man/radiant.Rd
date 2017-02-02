@@ -76,6 +76,6 @@ Coordinates of radiants of meteor showers are given on 5-days intervals on IMO s
 was used to calculate radiant coordinates for in-between days.
 }
 \source{
-Meteor Shower Calendar, \url{http://www.imo.net/calendar}
+Meteor Shower Calendar, \url{http://www.imo.net/observations/methods/visual-observation/}
 }
 

@@ -26,8 +26,6 @@ List of the countries can be found in the data frame \code{\link{vmdbsite}}. Dat
 containing observations corresponding to the specified country.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

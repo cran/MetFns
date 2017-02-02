@@ -31,8 +31,6 @@ IMO observer code (due to possible non-uniqueness of five letter combination).
 containing values which correspond to the observer with specified first and last name.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

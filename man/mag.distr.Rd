@@ -45,9 +45,6 @@ character string consisting of three capital letters which represent meteor show
 
 The histogram cells are intervals of length 1, with midpoints at magnitude values.
 }
-\references{
-\url{http://www.imo.net/data/visual}
-}
 \author{
 Kristina Veljkovic
 }

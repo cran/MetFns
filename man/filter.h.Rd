@@ -41,8 +41,6 @@ If right ascension and declination of shower radiant are not specified, the valu
 \code{h.low} and \code{h.up}.
 }
 \references{
-\url{http://www.imo.net/data/visual}
-
 Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
 For Meteor Observers}. IMO, Potsdam.
 }

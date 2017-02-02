@@ -25,6 +25,6 @@ The data consists of a list of visual meteor showers.
   }
 }
 \source{
-Meteor Shower Calendar, \url{http://www.imo.net/calendar}
+Meteor Shower Calendar, \url{http://www.imo.net}
 }
 
