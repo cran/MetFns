@@ -1,9 +1,8 @@
-filter.gc<-function(data,long.low=0,long.up=180, ew=c("E","W"), lat.low=0,lat.up=90, ns=c("N","S"))
+filter.gc<-function(data,lat.low=-90,lat.up=90, long.low=-180,long.up=180)
 {
-   if(!is.data.frame(data) || !is.numeric(c(lat.low,lat.up,long.low,long.up)) || !is.character(c(ns,ew)) || 
-       (any(c(lat.low,long.low)<0) || lat.up>90 || long.up>180) ||  long.low>long.up || lat.low>lat.up || 
-       !ns%in%c("N","S") || !ew%in%c("E","W") ) 
-      stop("invalid input parameter(s) specification: check data/long.low/long.up/ew/lat.low/lat.up/ns")
+   if(!is.data.frame(data) || !is.numeric(c(lat.low,lat.up,long.low,long.up)) || 
+   lat.low<(-90) || long.low<(-180) || lat.up>90 || long.up>180 || lat.low>lat.up || long.low>long.up) 
+      stop("invalid input parameter(s) specification: check data/lat.low/lat.up/long.low/long.up")
   
-   data[data$long>=long.low & data$long<=long.up & data$EW==ew & data$lat>=lat.low & data$lat<=lat.up & data$NS==ns,]
+   data[data$Latitude>=lat.low & data$Latitude<=lat.up & data$Longitude>=long.low & data$Longitude<=long.up,]
 }

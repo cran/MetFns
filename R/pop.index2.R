@@ -1,91 +1,66 @@
-pop.index2<-function(data,year,month.beg,month.end=month.beg,day.beg,
-day.end=day.beg,time.beg=0,time.end=2359,shw,k1=0.01,k2=1,num,
-add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,yinc=NULL)
+pop.index2<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
 { 
-   if(!is.data.frame(data) || !is.numeric(c(k1,k2,num))|| !is.logical(add.plot))
-      stop("invalid input parameter(s) specification: check data/k1/k2/num/add.plot")  
-     
-   sol1<-solar.long(year,month.beg,day.beg,dec.time(time.beg))
-   sol2<-solar.long(year,month.end,day.end,dec.time(time.end))
-
    data(popind,envir=environment())
    popind<-get("popind",envir=environment())
-
+   
    data(popind.err,envir=environment())
    popind.err<-get("popind.err",envir=environment())
+   
+   data(shw_list,envir=environment())
+   shw_list<-get("shw_list",envir=environment())
+   r<-shw_list$r[shw_list$Shw==shw]
 
 
-   data.shw<-filter(data,shw=shw,sol.low=sol1, sol.up=sol2)
-   results<-as.data.frame(replicate(7,numeric(0)))
-   names(results)<-c("start","stop","sollong","nINT","nSHW",
-                                      "pop.index","r.error")
-
+   
+   
+   results<-as.data.frame(replicate(6,numeric(0)))
+   names(results)<-c("sollong","date","nINT","nSHW","pop.index","r.error")
    
    mag.val<--6:7
+   
+   x<-seq(1.5,3.5,by=0.1)
+   y<-log(c(10,15,22,33,49,73,109,163,244,366,549,823,1234,1851,2776,4164,6246,9369))
+   z<-matrix(popind.err$r.err,nrow=21,ncol=18,byrow=T)
 
-   
-   p1<-sol1
-   Solar.long<-Vectorize(solar.long)
-   Dec.time<-Vectorize(dec.time)
-   
-   while(p1<sol2){
-         for(i in seq(k1,k2,0.01)){
-             p2<-p1+i
-             data.sel<-filter.sol(data.shw,p1,p2)
-             if(nrow(data.sel)>0){
-             datasel<-data.sel[2*(data.sel$sollong-Solar.long(data.sel$year,
-                               data.sel$month,data.sel$day,Dec.time(data.sel$start),3))<=i,]
-             if(((sum(datasel$N)>=num)||(p2==p1+k2))&& sum(datasel$N)>=10){
-                 mag.distrib<-matrix(rep(0,14*nrow(datasel)),ncol=14) 
-                 colnames(mag.distrib)<-names(datasel)[match("m6",names(datasel)):match("p7",names(datasel))]
-                 coefdm<-rep(0,nrow(datasel))
-                 mean.deltam<-0
-   
-                 for(j in 1:nrow(datasel)){
-                     select<-datasel[j, which(names(datasel)=="m6"):which(names(datasel)=="p7")]
-                     coefdm[j]<-datasel$N[j]*datasel$lmg[j]-sum(mag.val*select)}
 
-                 mean.deltam<-sum(coefdm)/sum(datasel$N)
-                 pop.index<-spline(popind$avdeltam,popind$r,method="natural",xout=mean.deltam)$y
-                 r.error<-round(krigeInterp(popind.err$r,log(popind.err$n),popind.err$r.err,xo=pop.index,
-                                             yo=log(sum(datasel$N)),extrap=TRUE)$z,6)
-                 r.error<-ifelse(r.error<0,0,r.error)
-                 r.error<-ifelse(pop.index<1.5|pop.index>3.5,NA,r.error)
-         
-                 start<-as.character(sollong_date(year,p1,month.beg,month.end,                                                                                            day.beg,day.end,time.beg,time.end))
+    blocks<-opt.bin(data,date.start,date.end,shw,kmin,kmax,num)
+    
+    for(j in 1:length(blocks)){
+             
+    sollong<-round(weighted.mean(blocks[[j]]$Sollong,blocks[[j]]$Number*blocks[[j]]$sine.h/(blocks[[j]]$F*r^(6.50-blocks[[j]]$Lmg))),3)
+    date<-sollong_date(sollong,date.start,date.end)
+    
+    
+
+    coefdm<-blocks[[j]]$Number*blocks[[j]]$Lmg- 
+     apply(as.matrix(blocks[[j]][,which(names(blocks[[j]])=="Mag.N6"):which(names(blocks[[j]])=="Mag.7")])%*%diag(mag.val),1,sum)
+
+    nSHW<-sum(blocks[[j]]$Number)
+    mean.deltam<-sum(coefdm)/nSHW
+    
+    if(nSHW<10) {
+      pop.index<-r.error<-NA
+    } else{
+      pop.index<-spline(popind$avdeltam,popind$r,method="natural",xout=mean.deltam)$y
+      if(nSHW>9369){
+        r.error<-predict(model<-rerr.reg(popind.err),data.frame(r=rep(pop.index,2),logn=rep(log(nSHW),2)))[1]
+      } else{
+        r.error<-round(interp2(x,y,t(z),pop.index,log(nSHW)),6)}
+    }
    
-                 if(p2<=sol2){
-                    stop<-as.character(sollong_date(year,p2,month.beg,month.end,                                                                                             day.beg,day.end,time.beg,time.end))
-                    sollong<-round(mean(c(p1,p2)),3)
-                  }
-                 else {
-                     stop<-as.character(sollong_date(year,sol2,month.beg,month.end,                                                                                           day.beg,day.end,time.beg,time.end))
-                     sollong<-round(mean(c(p1,sol2)),3)}
-         
+                
+   nINT<-nrow(blocks[[j]])
    
-   
-                 nINT<-nrow(datasel)
-                 nSHW<-sum(datasel$N)
-  
-                 results<-rbind(results,data.frame(start,stop,sollong,nINT,nSHW,pop.index,r.error))
-                 break
-   
-        }}}
-       p1<-p2
-                 
-         
+   results<-rbind(results,data.frame(sollong,date,nINT,nSHW,pop.index,r.error))
+                     
        
    }
-  names(results)[5]<-paste("n",shw,sep="") 
+   
+  names(results)[4]<-paste("n",shw,sep="") 
   results$pop.index<-round(results$pop.index,2)
   results$r.error<-round(results$r.error,2)
   
-  if(add.plot && !is.null(xlim1) && !is.null(xlim2) && !is.null(xinc) && 
-     !is.null(ylim1) && !is.null(ylim2) && !is.null(yinc) ) {
-     graph.data(results$sollong,results$pop.index,results$r.error,"Population index",xlim1,xlim2,xinc,ylim1,ylim2,yinc)
-  }
-
-
+ 
   results
  
 }

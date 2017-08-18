@@ -1,25 +1,47 @@
-sollong_date<-function(year,value, month.beg=1,month.end=12,day.beg=1,day.end=31,time.beg=0,time.end=2359)
+sollong_date<-function(solval,date1,date2,unit="minute")
 {
-  t1<-86400*(yday(ymd(paste(as.character(year),"-",as.character(month.beg),"-",as.character(day.beg),sep="")))-1)+3600*dec.time(time.beg)
-  t2<-86400*(yday(ymd(paste(as.character(year),"-",as.character(month.end),"-",as.character(day.end),sep="")))-1)+3600*dec.time(time.end)
+  date1.new<-as.POSIXct(date1,tz="UTC")
+  date2.new<-as.POSIXct(date2,tz="UTC")
+  if(year(date1.new)!=year(date2.new))
+   stop("invalid parameter specification: years of date1 and date2 do not match")
+   
+  if(!(unit%in%c("second","minute"))) 
+   stop("invalid parameter specification: check value of unit")
+   
+  if(solval<0 || solval>=360)
+   stop("invalid parameter specification: check value of solval")
+  
+  
+  year<-year(date1.new)
+  beg<-paste(as.character(year),"-01-01", sep="") 
+  
+  t1<-time_length(interval(as.POSIXct(beg,tz="UTC"),date1.new))
+  t2<-time_length(interval(as.POSIXct(beg,tz="UTC"),date2.new))
+  
+  
+  sol<-function(x){
+     date_sollong(as.POSIXct(x,origin=beg,tz="UTC"),prec=11)-solval}
 
-  sol<-function(t){
-     x<-as.character(as.POSIXct(t, origin = paste(as.character(year),"-01-01", sep=""),tz="UTC"))
-     solar.long(year,as.numeric(substr(x,6,7)),as.numeric(substr(x,9,10)), 
-                ifelse(nchar(x)<12,0,dec.time(as.numeric(paste(substr(x,12,13),
-                       substr(x,15,16),sep="")))+as.numeric(substr(x,18,19))/3600),prec=11)-value}
 
-
-  years<-1984:2017
-  seconds<-c(6842968,6778871,6801102,6823412,6845580,6781486,6803852,6825734,6847739,
-             6783726,6805704,6827620,6849623,6785410,6808050,6830233,6852326,6788426,
-             6810351,6832260,6854459,6790090,6812540,6834409,6856218,6792465,6814620,
-             6836792,6859193,6794786,6817197,6839165,6860952,6797149)
+  years<-1984:2020
+  seconds<-c(6842968,6778874,6801102,6823413,6845581,6781487,6803852,6825734,6847739,
+             6783728,6805704,6827620,6849624,6785412,6808052,6830236,6852326,6788427,
+             6810352,6832263,6854459,6790090,6812542,6834409,6856219,6792465,6814622,
+             6836793,6859193,6794787,6817197,6839168,6860952,6797152,6819026,6840779,6863038)
   if(sol(t2)<0) t2<-seconds[year==years]
-  if(sol(t1)>0) t1<-seconds[year==years]+5
-
-  floor_date(as.POSIXct(uniroot(sol,lower=t1, upper=t2)$root, 
-             origin = paste(as.character(year),"-01-01", sep=""),tz="UTC"),unit="minute")
+  if(sol(t1)>0) t1<-seconds[year==years]+1
+  
+  if(solval==0)
+  {round_date(as.POSIXct(seconds[year==years]+1,origin =beg,tz="UTC"),unit)}
+  else{
+  round_date(as.POSIXct(uniroot(sol,lower=t1, upper=t2)$root, origin =beg,tz="UTC"),unit) }
 }
+
+
+
+
+
+
+
 
 

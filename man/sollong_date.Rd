@@ -1,54 +1,45 @@
 \name{sollong_date}
 \alias{sollong_date}
 \title{
-Calculation of date and time corresponding to given solar longitude
+Calculation of date corresponding to given value of solar longitude
 }
 \description{
-Calculates calendar date and time corresponding to specified values of solar longitude and year.
+Calculates calendar date and time corresponding to specified value of solar longitude.
 }
 \usage{
-sollong_date(year,value,month.beg=1,month.end=12,day.beg=1,day.end=31,
-time.beg=0,time.end=2359)
+sollong_date(solval,date1,date2,unit="minute")
 }
 \arguments{
-  \item{year}{
- numeric vector of length 4 specifying year.
-}
-\item{value}{
+\item{solval}{
  numeric vector specifying solar longitude.
 }
-   \item{month.beg}{
-numeric vector specifying the beginning month. By default, \code{month.beg} is set to be equal to 1.
+\item{date1}{
+character vector specifying start date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
 }
-  \item{month.end}{
-numeric vector specifying the ending month. By default, \code{month.end} is set to be equal to 12.
+\item{date2}{
+character vector specifying end date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone). 
 }
-  \item{day.beg}{
-numeric vector specifying the beginning day. By default, \code{day.beg} is set to be equal to 1.
+\item{unit}{
+character vector specifying time unit to be result rounded to. Possible values are "minute"(default) and "second".
 }
-  \item{day.end}{
-numeric vector specifying the ending day. By default, \code{day.end} is set to be equal to 31.
 }
-  \item{time.beg}{
-numeric vector (0-2359) specifying lower boundary of time in hours and minutes, corresponding to \code{day.beg}. By default, \code{time.beg} is set to be equal to 0.
-}
-  \item{time.end}{
-numeric vector (0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
-}
+\details{
+The function \code{sollong_date} calculates date corresponding to the given value of solar longitude. It searches for a solution in a interval
+bounded by \code{date1} and \code{date2}.
 }
 \value{
-\code{solar.long} returns object of POSIXct class - calendar date plus time in hours, minutes and seconds, in UTC.
+\code{sollong_date} returns object of POSIXct class, calendar date in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
 }
-
 \author{
 Kristina Veljkovic
 }
+\note{Arguments \code{date1} and \code{date2} should belong to the same year.}
 \seealso{
-\code{\link{solar.long}}
+\code{\link{date_sollong}}
 }
 \examples{
-## calculate date and time corresponding to 0.9 solar longitude for year 2000, 
-## search between 1 and 31 March
-sollong_date(year=2000,value=0.9,month.beg=3,month.end=3,day.beg=1,day.end=31)
+## calculate date corresponding to 1 degree of solar longitude 
+## search between dates 1 and 31 March 2017
+sollong_date(1,"2017-03-01","2017-03-31")
 }
 

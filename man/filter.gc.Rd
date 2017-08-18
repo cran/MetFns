@@ -8,70 +8,52 @@ Selects data for a given visual meteor dataset and specified geographical coordi
 or interval of geographical coordinates.
 }
 \usage{
-filter.gc(data,long.low = 0,long.up = 180,ew = c("E", "W"),lat.low = 0,
-lat.up = 90,ns = c("N", "S"))
+filter.gc(data,lat.low =-90,lat.up = 90,long.low =-180,long.up = 180)
 }
 \arguments{
   \item{data}{
 data frame consisting of visual meteor data (rate or magnitude data).
 }
-  \item{long.low}{
-numeric vector taking a value between 0 (default) and 180, specifying lower boundary of longitude in degrees.
-}
-  \item{long.up}{
-numeric vector taking a value between 0 and 180 (default), specifying upper boundary of longitude in degrees.
-}
-  \item{ew}{
-character vector (E,W), specifying east or west position from the prime meridian.
-}
   \item{lat.low}{
-numeric vector taking a value between 0 (default) and 90, specifying lower boundary of latitude in degrees.
+numeric vector taking a value between -90 (default) and 90, specifying lower boundary of latitude in degrees.
 }
   \item{lat.up}{
-numeric vector taking a value between 0 and 90 (default), specifying upper boundary of latitude in degrees.
+numeric vector taking a value between -90 and 90 (default), specifying upper boundary of latitude in degrees.
 }
-  \item{ns}{
-character vector (N,S), specifying north or south position from equator.
+  \item{long.low}{
+numeric vector taking a value between -180 (default) and 180, specifying lower boundary of longitude in degrees.
+}
+  \item{long.up}{
+numeric vector taking a value between -180 and 180 (default), specifying upper boundary of longitude in degrees.
 }
 }
 \details{
-If values of arguments \code{long.low} and \code{long.up}, as well as \code{lat.low} and \code{lat.up}, are the same,
+If values of arguments \code{lat.low} and \code{lat.up}, as well as \code{long.low} and \code{long.up}, are the same,
 \code{filter.gc} selects data for  particular observing site.
 
-\code{filter.gc} enables one to select data only by longitude or latitude, with geographical coordinates
+\code{filter.gc} enables one to select data only by latitude or longitude, with geographical coordinates
 being between given boundaries, less, greater or equal to a boundary.
 }
 \value{
 \code{filter.gc} returns data frame with the same number of columns as the argument \code{data},
-containing observations corresponding to geographical coordinates with longitude between \code{long.low} and \code{long.up} 
-and latitude between \code{lat.low} and \code{lat.up}.
-}
-\references{
-Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
-For Meteor Observers}. IMO, Potsdam.
+containing observations corresponding to geographical coordinates with latitude between \code{lat.low} and \code{lat.up} and 
+longitude between \code{long.low} and \code{long.up}.
 }
 \author{
 Kristina Veljkovic
 }
 \note{
-Argument \code{data} has to consist of the columns named "long", "EW", "lat" and "NS".
+Argument \code{data} has to consist of the columns named "Latitude" and "Longitude".
 }
 \seealso{
 \code{\link{filter}}
 }
 \examples{
-## select visual meteor data for 2004, site with longitude 19.7E and latitude 44.2N
+## select 2015 rate and magnitude data for observing site with latitude 44.2N and longitude 19.7E
+filter.gc(rate2015,lat.low=44.2,lat.up=44.2,long.low=19.7,long.up=19.7)
+filter.gc(magn2015,lat.low=44.2,lat.up=44.2,long.low=19.7,long.up=19.7)
 
-## rate data for the year 2004
-data(rate04)
-filter.gc(rate04,long.low=19.7,long.up=19.7,ew="E",lat.low=44.2,lat.up=44.2,ns="N")
-
-## magnitude data for the year 2004
-data(magn04)
-filter.gc(magn04,long.low=19.7,long.up=19.7,ew="E",lat.low=44.2,lat.up=44.2,ns="N")
-
-
-## select visual meteor data corresponding to sites with latitude 44.2N and above
-filter.gc(rate04,lat.low=44.2,ns="N")
-filter.gc(magn04,lat.low=44.2,ns="N")
+## select 2015 rate and magnitude data corresponding to sites with latitude 44.2N and above
+filter.gc(rate2015,lat.low=44.2)
+filter.gc(magn2015,lat.low=44.2)
 }

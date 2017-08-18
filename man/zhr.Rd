@@ -3,41 +3,22 @@
 \title{
 Calculates zenithal hourly rate (ZHR)
 }
-\description{Calculates and plots average zenithal hourly rate of a meteor shower
+\description{Calculates average zenithal hourly rate of a meteor shower
 for a given rate data, specified shower, period of days, population index, minimum and maximum bin sizes, number of meteors and ZHR
 correction.
 }
 \usage{
-zhr(data,year,month.beg,month.end=month.beg,day.beg,day.end=day.beg,
-time.beg=0,time.end=2359,shw,r=NULL,Ralpha=NULL,Delta=NULL,k1=0.01,k2=1,num,c=1,
-data2=NULL,add.plot=FALSE,xlim1=NULL,xlim2=NULL,xinc=NULL,ylim1=NULL,ylim2=NULL,
-yinc=NULL)
+zhr(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5,rdata=NULL)
 }
 \arguments{
   \item{data}{
   data frame consisting of visual meteor rate data.
 }
-  \item{year}{
- numeric vector of length 4 specifying year.
+  \item{date.start}{
+character vector or factor specifying start date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
 }
-  \item{month.beg}{
-numeric vector specifying the beginning month.
-}
-  \item{month.end}{
-numeric vector specifying the ending month. By default, \code{month.end} is set to be equal to \code{month.beg}.
-}
-  \item{day.beg}{
-numeric vector specifying the beginning day.
-}
-  \item{day.end}{
-numeric vector specifying the ending day. By default, \code{day.end} is set to be equal to \code{day.beg}.
-}
-
-  \item{time.beg}{
-numeric vector (0-2359) specifying lower boundary of time in hours and minutes, corresponding to \code{day.beg}. By default, \code{time.beg} is set to be equal to 0.
-}
-  \item{time.end}{
-numeric vector (0-2359) specifying upper boundary of time in hours and minutes, corresponding to \code{day.end}. By default, \code{time.end} is set to be equal to 2359.
+  \item{date.end}{
+character vector or factor specifying end date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone). 
 }
    \item{shw}{
  character string consisting of three capital letters which represent meteor shower code.
@@ -45,97 +26,69 @@ numeric vector (0-2359) specifying upper boundary of time in hours and minutes, 
    \item{r}{
  numeric vector specifying population index of a meteor shower.
 }
-   \item{Ralpha}{
- numeric vector with value between 0 and 360, specifying right ascension of the radiant, in degrees.
+   \item{kmin}{
+  numeric vector specifying minimum bin size, in degrees of solar longitude. By default, it is equal to 0.01.
 }
-   \item{Delta}{
- numeric vector with value between -90 and +90, specifying declination of the radiant, in degrees.
-}
-   \item{k1}{
-  numeric vector specifying minimum bin size, in degrees of solar longitude. By default, it is   equal to 0.01.
-}
-  \item{k2}{
-  numeric vector specifying maximum bin size, in degrees of solar longitude. By default, it is   equal to 1.
+  \item{kmax}{
+  numeric vector specifying maximum bin size, in degrees of solar longitude. By default, it is equal to 1.
 }
 \item{num}{
   numeric vector specifying total number of meteors per interval.
 }
-   \item{c}{
- numeric vector specifying value of ZHR correction. By default, it is equal to 1.
+   \item{c.zhr}{
+ numeric vector specifying value of ZHR correction. By default, it is equal to 0.5.
 }
 
-\item{data2}{
- data frame consisting of corresponding visual meteor magnitude data.
+\item{rdata}{
+ data frame consisting of population index values calculated on corresponding visual meteor magnitude data.
 }
-\item{add.plot}{
-  logical vector. If TRUE, the population index is plotted.
 }
-\item{xlim1}{
-  numeric vector specifying minimum value on x-axis.
-}
-\item{xlim2}{
-  numeric vector specifying maximum value on x-axis.
-}
-\item{xinc}{
-  numeric vector specifying increment between labels on x-axis.
-}
-\item{ylim1}{
-  numeric vector specifying minimum value on y-axis.
-}
-\item{ylim2}{
-  numeric vector specifying maximum value on y-axis.
-}
-\item{yinc}{
-  numeric vector specifying increment between labels on y-axis.
-} 
-}
-\details{Adaptive-bin size algorithm is used. It tries to maintain a used-defined optimum meteor
-number per bin. For the case that not enough meteors are available, a maximum bin size is used.
+\details{
+Optimal bin size algorithm is used. It searches for an optimal bin size between minimum bin size \code{kmin} and maximum bin size \code{kmax} with total number of meteors per bin \code{num}. If there are not enough meteors, a maximum bin size is used. For further calculations, only observing intervals with lengths smaller or equal to optimal bin are used.
 
 Average zenithal hourly rate is calculated by the formula 
 
-\emph{ZHR=(c+sum_i n_i)/(sum_i T_{eff,i}/C_i), i=1,2,...,k}
+\deqn{ZHR=\frac{c+\sum_i N_i}{\left(\sum_i \frac{T_{eff,i}}{C_i}\right)}, i=1,2,...,k}{ZHR=(c+sum_i N_i)/(sum_i T_{eff,i}/C_i), i=1,2,...,k}
 
-where \emph{k} is the number of observing periods, \emph{n_i} - the raw number of meteors seen by each observer in
-observing period \emph{i}, \emph{T_{eff,i}} - the effective time or amount of time an observer actually scans the sky for meteors
-during observing period \emph{i}, and \emph{C_i} - total correction factor that accounts for all the imperfections in the observing
-period \emph{i} such as clouds, low radiant, low limiting magnitude.
+where \eqn{k} is the number of observing periods, \eqn{N_i} - the raw number of meteors seen by each observer in
+observing period \eqn{i}, \eqn{T_{eff,i}} - the effective time or amount of time an observer actually scans the sky for meteors
+during observing period \eqn{i}, and \eqn{C_i} - total correction factor that accounts for all the imperfections in the observing
+period \eqn{i} such as clouds, low radiant, low limiting magnitude.
 
 Total correction factor is equal to 
 
-\emph{C_i=r^(6.5-lmg_i)F_i/sin(h_i)},
+\deqn{C_i=\frac{r^{(6.5-lmg_i)}F_i}{\sin(h_i)}}{C_i=r^(6.5-lmg_i)F_i/sin(h_i)},
 
-where \emph{r} is population index, \emph{lmg_i} limiting magnitude, \emph{F_i} correction  factor for field-of-view obstruction,
-\emph{h_i} radiant elevation for each observer in observing period \emph{i}.
+where \eqn{r} is population index, \eqn{lmg_i} limiting magnitude, \eqn{F_i} correction  factor for field-of-view obstruction,
+\eqn{h_i} radiant elevation for each observer in observing period \eqn{i}.
 
-In the numerator, \emph{c} is included to correct for the asymmetric high and low end possibilities in
+In the numerator, \eqn{c} is included to correct for the asymmetric high and low end possibilities in
 a Poisson distribution (distribution of the number of observed meteors).
 
 Standard error of the average zenithal rate is calculated by the formula
 
-\emph{sigma=ZHR/sqrt(c+sum_i n_i)}.
+\deqn{\sigma=\frac{\sqrt{c+\sum_i N_i}}{\sum_i \frac{T_{eff,i}}{C_i}}, i=1,2,...,k}{sigma=sqrt(c+sum_i N_i)/(sum_i T_{eff,i}/C_i), i=1,2,...,k}.
 
 
-The spatial number density of meteoroids producing meteors of magnitude at least 6.5 is (per \emph{10^9km^3})
+The spatial number density of meteoroids producing meteors of magnitude at least 6.5 is (per \eqn{10^9km^3})
 
-\emph{rho=(10.65r-12.15)ZHR/(3600 178700r^(-1.82)V)},
+\deqn{\rho=\frac{(10.65r-12.15)ZHR}{3600 178700r^(-1.82)V}}{rho=(10.65r-12.15)ZHR/(3600* 178700r^(-1.82)V)},
 
-where \emph{V} is stream's geocentric velocity. 
+where \eqn{V} is stream's geocentric velocity. 
 
 Standard error of spatial number density is approximated with
 
-\emph{sigma_{rho}=sigma rho/ZHR}.
+\deqn{\sigma_{\rho}=\frac{\sigma \rho}{ZHR}}{sigma_{rho}=sigma* rho/ZHR}.
 
 If right ascension and declination of shower radiant are not specified, the values from the data frame
-\code{\link{radiant}} are used. If population index is not specified, it is calculated using the function \code{pop.index2} and then incorporated in the calculation of ZHR.
-
+\code{\link{radiant}} are used. If population index is not specified, it should be calculated using functions \code{pop.index} or \code{pop.index2} and then incorporated in the calculation of ZHR (through dataframe \code{rdata}).
 }
 \value{
 Data frame containing following vectors
   \describe{
-   \item{start}{factor  Calendar date and time in UTC of left bound of time interval}
-   \item{stop}{factor  Calendar date and time in UTC of right bound of time interval}
-   \item{sollong}{numeric Solar longitude corresponding to the middle of time interval}
+   \item{sollong}{numeric Mean of observers' solar longitudes weighted by \eqn{\frac{T_{eff,obs}}{C_{obs}}}{T_{eff,obs}/C_{obs}}, observers effective time
+   divided by total correction factor}
+   \item{date}{POSIXct  Calendar date and time in UTC corresponding to \code{sollong}}
    \item{nINT}{numeric Number of observing time intervals}
    \item{nSHW}{numeric Number of observed meteors. String SHW is replaced with the code of meteor shower.}
    \item{ZHR}{numeric Zenithal Hourly Rate}
@@ -143,12 +96,9 @@ Data frame containing following vectors
    \item{density}{numeric Spatial number density} 
    \item{dens.err}{numeric Standard error of spatial number density}
 }
-If \code{add.plot} is TRUE, additionally xy plot of Zenithal Hourly Rate is made. Solar longitude is on x-axis and population index on y-axis. ZHR is represented with black filled circles and \emph{68\%} confidence intervals. Values of limits (minimum
-and maximum values) on x and y axis (\code{xlim1,xlim2,ylim1,ylim2}), as well as increments between the axis labels 
-(\code{xinc,yinc}) should be provided to function call. 
 }
 \references{
-Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
+Rendtel J. and Arlt R., editors (2014). \emph{Handbook
 For Meteor Observers}. IMO, Potsdam.
 
 Bias, P.V. (2011). A Note on Poisson inference and extrapolations under low raw data
@@ -158,46 +108,27 @@ and short interval observation conditions. \emph{WGN, Journal of the IMO},39:1, 
 Kristina Veljkovic
 }
 \seealso{
-\code{\link{pop.index2}}
+\code{\link{zhr.plot}},\code{\link{pop.index2}}
 }
 \examples{
-## calculate ZHR for observations of 1997 Perseids, time period 
-## 27th July to 16th August, radiant elevation higher than 20 degrees,
-## total correction factor smaller than 5, bin size 1 degree, population index 2.2
-## First select rate data for Perseids activity - time period 15th July to 24th August, 
-## radiant elevation higher than 20 degrees, total correction factor smaller than 5
-## data(rate97)
-## rate<-filter(rate97,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,
-## shw="PER",h.low=20)
-## zhr(rate,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,
-## shw="PER",r=2.2,k1=1,num=300)
+## calculate ZHR for observations of 2015 Orionids, time period 
+## 10th to 25th October, min bin size 0.1 degree, max bin size 1 degree, 
+## number of meteors equals 100 
+## First select rate data for Orionids activity from 10th to 25th October, 
+## limiting magnitudes above 5, radiant elevation above 20 degrees, percentage of clouds below 20
+ori2015<-filter(rate2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
+P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
+zhr(ori2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",r=2.5,
+kmin=0.1,kmax=1,num=100)
 
-## make graphic of ZHR
-## x-axis limits: min(sollong)=124.549, max(sollong)=144.110
-## y-axis limits: min(ZHR-st.err)=5.1,max(ZHR+st.err)=68.6
-## zhr(rate,year=1997,month.beg=7,month.end=8,day.beg=27,day.end=16,shw="PER",r=2.2,
-## k1=1,num=300,add.plot=TRUE,xlim1=124,xlim2=145,xinc=1,ylim1=5,ylim2=70,yinc=5)
-
-
-
-## calculate ZHR around maximum activity of 1997 Perseids, time period 10th August 19h
-## to 14th August 7h, radiant elevation higher than 20 degrees, total correction 
-## factor smaller than 5 and population index calculated from magnitude data
-## data(magn97)
-## magn<-filter(magn97,year=1997,month.beg=7,month.end=8,day.beg=15,day.end=24,
-## shw="PER",h.low=20)
-## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=14,time.beg=1900,time.end=700,
-## shw="PER",data2=magn,num=300)
-
-## make graphic of ZHR around max activity of 1997 Perseids
-## x-axis limits: min(sollong)=138.252, max(sollong)=141.471
-## y-axis limits: min(ZHR-st.err)=24.7,max(ZHR+st.err)=141.4
-## zhr(rate,year=1997,month.beg=8,day.beg=10,day.end=14,time.beg=1900,time.end=700,
-## shw="PER",data2=magn,num=300,add.plot=TRUE,xlim1=138.2,xlim2=141.5,xinc=0.1,
-## ylim1=20,ylim2=150,yinc=10)
-
-
-
+## include in calculation of ZHR population index calculated from magnitude data
+## see further details in example for pop.index2
+ori2015mag<-filter(magn2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
+P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
+oripop<-pop.index2(ori2015mag,date.start="2015-10-10",date.end="2015-10-25",
+shw="ORI",kmin=0.5,kmax=2,num=100)
+zhr(ori2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
+kmin=0.1,kmax=1,num=100,rdata=oripop)
 }
 
 

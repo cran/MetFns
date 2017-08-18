@@ -1,15 +1,16 @@
-filter.sol<-function(data, sol.low=0, sol.up=360)
+filter.sol<-function(data, sol.low, sol.up)                
 {
    if(!is.data.frame(data) || !is.numeric(c(sol.low,sol.up)) || any(c(sol.low,sol.up)<0) || any(c(sol.low,sol.up)>360)) 
       stop("invalid input parameter(s) specification: check data/sol.low/sol.up ")
 
-   year<-data$year[100]
-   year<-ifelse(year<20,year+2000,1900+year)
+   year<-year(midint(data[100,]))
 
-   if(sol.up>=sol.low)
-     data[data$sollong>=sol.low & data$sollong<=sol.up,]
-   else if(sol.low>sol.up&&sol.up<=solar.long(year,12,31,23.99)&&sol.low>=solar.long(year,1,1,0)) 
-     rbind(data[data$sollong>=sol.low,],data[data$sollong<=sol.up,])
+   if(sol.low<sol.up)
+     data[data$Sollong>=sol.low & data$Sollong<=sol.up,]
+   else if(sol.low>sol.up && sol.low>=date_sollong(paste(as.character(year),"-01-01", sep="")) && 
+           sol.up<=date_sollong(paste(as.character(year),"-12-31 23:59:59", sep=""))) 
+     rbind(data[data$Sollong>=sol.low,],data[data$Sollong<=sol.up,])
    else
-     stop("invalid input parameter(s) specification: check sol.low/sol.up format")
+     stop("invalid input parameter(s) specification: check value(s) of sol.low/sol.up")
 }
+

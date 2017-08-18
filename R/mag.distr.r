@@ -1,9 +1,8 @@
-mag.distr<-function(data,year,month.beg,month.end=month.beg,day.beg,
-                    day.end=day.beg,time.beg=0,time.end=2359,shw)
+mag.distr<-function(data,date.start,date.end,shw)
 { 
 
-   data.shw<-filter(data,year,month.beg, month.end, day.beg,day.end,time.beg, time.end,shw)
-   counts<-t(apply(data.shw[, which(names(data.shw)=="m6"):which(names(data.shw)=="p7")],2,sum))
+   data.shw<-filter(data,date.start,date.end,shw)
+   counts<-t(apply(data.shw[, which(names(data.shw)=="Mag.N6"):which(names(data.shw)=="Mag.7")],2,sum))
    
    x<-rep(-6:7,counts)                          
    par(mfrow=c(1,2))

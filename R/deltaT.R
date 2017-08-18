@@ -1,8 +1,5 @@
 deltaT<-function(year,month)
 {
-   if(!is.numeric(c(year,month)) || !(month%in%1:12))
-      stop("invalid input parameter specification: check year/month")
-
    year<-year+(month-0.5)/12
    if(year<1986)
       deltaT<-45.45+1.067*(year-1975)-(year-1975)^2/260-(year-1975)^3/718

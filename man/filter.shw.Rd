@@ -14,37 +14,26 @@ filter.shw(data,shw)
 data frame consisting of visual meteor data (rate or magnitude data).
 }
   \item{shw}{
-character string consisting of three capital letters which represent meteor shower code. 
+character string consisting of three capital letters which represent meteor shower code.
 }
 }
 \details{
-List of meteor shower codes can be found in the dataframe \code{\link{shw_list}}. 
+List of meteor shower codes can be found in the dataframe \code{\link{shw_list}}. Code "SPO" represents sporadic showers.
 }
 \value{
 \code{filter.shw} returns data frame containing observations which correspond to specified meteor shower.
-}
-\references{
-Rendtel J. and Arlt R., editors (2008). \emph{IMO Handbook
-For Meteor Observers}. IMO, Potsdam.
 }
 \author{
 Kristina Veljkovic
 }
 \note{
-Argument \code{data} has to consist of the column named "SPO" in rate data frames (placed before the 
-columns for showers) and columns "zero" and "Shw" in magnitude data frames.
+Argument \code{data} has to consist of the column named "Shower". 
 }
 \seealso{
 \code{\link{filter}}
 }
 \examples{
-## select visual meteor data for Perseids 2000 
-
-## rate data for the year 2000
-data(rate00)
-filter.shw(rate00,shw="PER")
-
-## magnitude data for the year 2000
-data(magn00)
-filter.shw(magn00,shw="PER")
+## select rate and magnitude data for 2015 Perseids
+filter.shw(rate2015,shw="PER")
+filter.shw(magn2015,shw="PER")
 } 

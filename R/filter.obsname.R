@@ -1,11 +1,9 @@
-filter.obsname<-function(data,name,fname)
+filter.obsname<-function(data,fname,lname)
 {
-   if(!is.data.frame(data) || !is.character(c(name,fname)) || !grepl("^[a-zA-Z]+$",name) || !grepl("^[a-zA-Z]+$",fname))
-      stop("invalid input parameter(s) specification: check data/name/fname")
+   if(!is.data.frame(data) || !is.character(c(fname,lname)) || !grepl("^[a-zA-Z]+$",fname) || !grepl("^[a-zA-Z]+$",lname))
+      stop("invalid input parameter(s) specification: check data/fname/lname")
    
-   data(vmdbpers,envir=environment())
-   vmdbpers<-get("vmdbpers",envir=environment()) 
-   vmdbpers <- data.frame(lapply(vmdbpers, as.character), stringsAsFactors=FALSE)
-   imocode<-vmdbpers[vmdbpers$Name==toupper(name) & vmdbpers$Firstname==toupper(fname),1]
-   filter.imocode(data,imocode)
+   
+   data[as.character(data$First.Name)==fname & as.character(data$Last.Name)==lname,]
+   
 }

@@ -1,45 +1,44 @@
 \name{solar.long}
 \alias{solar.long}
 \title{
-Calculation of solar longitude
+Vectorized calculation of solar longitude
 }
 \description{
-Calculates solar longitude with respect to the equinox of 2000.0 for given year, month, day and time.
+Calculates solar longitudes with respect to the equinox of 2000.0 for given dates.
 }
 \usage{
-solar.long(year,month,day,time,prec=11)
+solar.long(date,prec=4)
 }
 \arguments{
-  \item{year}{
- numeric vector of length 4 specifying year.
-}
-   \item{month}{
-numeric vector specifying month of the year.
-}
-   \item{day}{
-numeric vector specifying day.
-}
-   \item{time}{
-numeric vector specifying time in hours.
+ \item{date}{
+character vector or factor specifying dates, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
 }
 \item{prec}{
-numeric vector specifying number of decimals of calculated solar longitude. By default it is equal to 11.
+numeric vector specifying number of decimals of calculated solar longitude (between 0 and 11 decimals). By default it is equal to 4.
 }
 }
+\details{
+The function \code{solar.long} represents vectorized version of function \code{sollong}. It calculates solar longitudes corresponding to multiple dates.}
 \value{
-\code{solar.long} returns numeric vector with a value between 0 and 360.
-}
-\references{
-Steyaert C. (1991). Calculating the Solar Longitude 2000.0, \emph{WGN, Journal of the IMO}, 19:2, 31-34.
+\code{solar.long} returns solar longitude(s), numeric vector with specified number of decimal places.
 }
 \author{
 Kristina Veljkovic
 }
 \seealso{
-\code{\link{filter.sol}}
+\code{\link{date_sollong},\link{filter.sol}}
 }
 \examples{
-## calculate solar longitude for June 22, 2006, at 4h UT, rounded to 3 decimals
-solar.long(year=2006,month=6,day=22,time=4,prec=3)
+## calculate solar longitudes corresponding to the middle of time intervals 
+## of 2015 Orionids rate data
+## first select Orionids from 2015 rate data
+rateOri<-filter.shw(rate2015,shw="ORI")
+
+## calculate middle of observing time intervals of 2015 Orionids rate data
+midintOri<-midint(rateOri)
+
+## calculate solar longitudes corresponding to the middle of time intervals
+solar.long(midintOri)
+
 }
 
