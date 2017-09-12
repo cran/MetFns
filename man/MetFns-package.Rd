@@ -14,8 +14,8 @@ magnitude distribution.
 \tabular{ll}{
 Package: \tab MetFns\cr
 Type: \tab Package\cr
-Version: \tab 3.0.0\cr
-Date: \tab 2017-08-18\cr
+Version: \tab 3.0.1\cr
+Date: \tab 2017-09-12\cr
 License: \tab GPL-2 | GPL-3\cr
 }
 }
