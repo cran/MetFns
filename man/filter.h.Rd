@@ -7,7 +7,7 @@ Selection of visual meteor data by radiant elevation
 Selects data for a given visual meteor dataset, specified shower and its radiant elevation or interval of radiant elevations.
 }
 \usage{
-filter.h(data,shw,Ralpha = NULL,Delta = NULL,h.low = 10,h.up = 90)
+filter.h(data,shw,h.low = 0,h.up = 90)
 }
 \arguments{
   \item{data}{
@@ -16,14 +16,8 @@ data frame consisting of visual meteor rate data.
   \item{shw}{
 character string consisting of three capital letters which represent meteor shower code.
 }
-  \item{Ralpha}{
-numeric vector with value between 0 and 360, specifying right ascension of the radiant, in degrees.
-}
-  \item{Delta}{
-numeric vector with value between -90 and +90, specifying declination of the radiant, in degrees.
-}
   \item{h.low}{
-numeric vector with value between 0 and 90, specifying lower boundary of radiant elevation in degrees. Default value is 10.
+numeric vector with value between 0 (default) and 90, specifying lower boundary of radiant elevation in degrees.
 }
   \item{h.up}{
 numeric vector with value between 0 and 90 (default), specifying upper boundary of radiant elevation in degrees.
@@ -32,8 +26,8 @@ numeric vector with value between 0 and 90 (default), specifying upper boundary 
 \details{
 Radiant elevation \emph{h} is measured from the observer's horizon towards zenith. 
 
-If right ascension and declination of shower radiant are not specified, the values from the data frame
-\code{\link{radiant}} are used.
+Values from the data frame
+\code{\link{radiant}} are used for right ascension and declination of shower radiant.
 }
 \value{
 \code{filter.h} returns data frame containing observations  corresponding to the radiant elevation between 

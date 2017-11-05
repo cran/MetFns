@@ -31,7 +31,7 @@ Argument \code{data} has to consist of the column named "City".
 \code{\link{filter}},\code{\link{filter.country}}
 }
 \examples{
-## select 2015 rate and magnitude data from Debelo brdo site
-filter.site(rate2015,site="Debelo brdo")
-filter.site(magn2015,site="Debelo brdo")
+## select 2015 rate and magnitude data from Debelo Brdo site
+filter.site(rate2015,site="Debelo Brdo")
+filter.site(magn2015,site="Debelo Brdo")
 }

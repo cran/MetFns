@@ -1,7 +1,10 @@
 graph.data<-function(x,y,width,ytitle,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
 {
-  if(!is.numeric(c(x,y,width,xlim1,xlim2,xinc,ylim1,ylim2,yinc)) || !is.character(ytitle))
-      stop("invalid input parameter(s) specification: check x/y/width/xlim1/xlim2/xinc/ylim1/ylim2/yinc/ytitle")
+  if(!is.numeric(c(x,y,width,xlim1,xlim2,xinc,ylim1,ylim2,yinc)))
+      stop("Invalid input parameter(s) specification: check values of x/y/width/xlim1/xlim2/xinc/ylim1/ylim2/yinc")
+  
+  if(!is.character(ytitle))
+      stop("Invalid input parameter specification: check ytitle")
 
   par(mfrow=c(1,1))
   plotCI(x,y,width, pt.bg="black",pch=19, xlab="Solar longitude (J2000.0)",ylab=ytitle, main="",

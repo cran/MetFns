@@ -26,7 +26,7 @@ character vector or factor specifying end date, given in \code{"\%Y-\%m-\%d \%H:
   numeric vector specifying range of magnitudes. It should consist of at least 5 magnitude classes.
 }
 \item{k}{
-  numeric vector specifying bin size in degrees of solar longitude.
+  numeric vector specifying bin size in degrees of solar longitude. Minimum accepted value is 0.001 and maximum accepted value is 5.
 }
 
 }
@@ -55,7 +55,7 @@ Data frame containing following vectors
    \item{nINT}{numeric Number of observing time intervals}
    \item{nSHW}{numeric Number of observed meteors belonging to the shower}
    \item{pop.index}{numeric Population index}
-   \item{sigma.r}{numeric Standard error of population index}
+   \item{r.error}{numeric Standard error of population index}
 }
 }      
 \references{
@@ -86,12 +86,12 @@ For calculation of population index, only observing intervals with lengths small
 }
 \examples{
 ##calculate population index for observations of 2015 Orionids, time period 
-## 20th to 25th October, bin size 1 degree
-## First select magnitude data for Orionids activity from 20th to 25th October, 
+## 21th to 25th October, bin size 1 degree
+## First select magnitude data for Orionids activity from 21th to 25th October, 
 ## limiting magnitudes above 5, radiant elevation above 20 degrees and percentage of clouds below 20
-magnOri<-filter(magn2015,date.start="2015-10-20",date.end="2015-10-25",shw="ORI",
-P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
-pop.index(magnOri,date.start="2015-10-20",date.end="2015-10-25",shw="ORI",k=1)
+magnOri<-filter(magn2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",
+P.up=20,mag.low=5,h.low=20)
+pop.index(magnOri,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",k=1)
 
 }
 

@@ -9,10 +9,10 @@ IMO observer code, observer's name, geographical coordinates, site, country, lim
 factor for field-of-view obstruction, solar longitude, radiant elevation and total correction factor.
 }
 \usage{
-filter(data,date.start=NULL,date.end=NULL,shw=NULL,lat.low=NULL,lat.up=NULL,
-long.low=NULL,long.up=NULL,fname=NULL,lname=NULL,site=NULL,country=NULL,
-mag.low=NULL,mag.up=NULL,P.low=NULL,P.up=NULL,sol.low=NULL,sol.up=NULL,
-h.low=NULL,h.up=NULL,r=NULL,C=NULL)
+filter(data,date.start=NULL,date.end=NULL,shw=NULL,lat.low=-90,lat.up=90,
+long.low=-180,long.up=180,fname=NULL,lname=NULL,site=NULL,country=NULL,
+mag.low=1,mag.up=8,P.low=0,P.up=90,sol.low=NULL,sol.up=NULL,
+h.low=0,h.up=90,r=NULL,C=NULL)
 }
 \arguments{
   \item{data}{
@@ -34,10 +34,10 @@ numeric vector taking a value between -90 (default) and 90, specifying lower bou
 numeric vector taking a value between -90 and 90 (default), specifying upper boundary of latitude in degrees.
 }
   \item{long.low}{
-numeric vector taking a value between -180 and 180, specifying lower boundary of longitude in degrees.
+numeric vector taking a value between -180(default) and 180, specifying lower boundary of longitude in degrees.
 }
   \item{long.up}{
-numeric vector taking a value between -180 and 180, specifying upper boundary of longitude in degrees.
+numeric vector taking a value between -180 and 180(default), specifying upper boundary of longitude in degrees.
 }
   \item{fname}{
 character string specifying observer's first name.
@@ -52,16 +52,16 @@ character string specifying name of the observing site.
 character string specifying name of the observing country.
 }
   \item{mag.low}{
-numeric vector with value between 0 and 8, specifying lower boundary of limiting magnitude.
+numeric vector with value between 1(default) and 8, specifying lower boundary of limiting magnitude.
 }
   \item{mag.up}{
-numeric vector with value between 0 and 8, specifying upper boundary of limiting magnitude.
+numeric vector with value between 1 and 8(default), specifying upper boundary of limiting magnitude.
 }
   \item{P.low}{
-numeric vector with value between 0 and 100, specifying lower boundary of percentage of field-of-view obstruction. 
+numeric vector with value between 0 (default) and 90, specifying lower boundary of percentage of field-of-view obstruction. 
 }
   \item{P.up}{
-numeric vector with value between 0 and 100, specifying upper boundary of percentage of field-of-view obstruction.
+numeric vector with value between 0 and 90(default), specifying upper boundary of percentage of field-of-view obstruction.
 }
   \item{sol.low}{
 numeric vector with value between 0 and 360, specifying lower 
@@ -72,11 +72,11 @@ numeric vector with value between 0 and 360, specifying upper
 boundary of solar longitude in degrees.
 }
   \item{h.low}{
-numeric vector with value between 0 and 90, specifying lower boundary 
+numeric vector with value between 0(default) and 90, specifying lower boundary 
 of radiant elevation in degrees.
 }
   \item{h.up}{
-numeric vector with value between 10 and 90, specifying upper boundary 
+numeric vector with value between 0 and 90(default), specifying upper boundary 
 of radiant elevation in degrees.
 }
   \item{r}{
@@ -105,6 +105,5 @@ Kristina Veljkovic
 \examples{
 ## select rate data for Orionids activity from 10th to 25th October, 
 ## limiting magnitudes above 5, radiant elevation above 20 degrees, percentage of clouds below 20
-filter(rate2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
-P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
+filter(rate2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",P.up=20,mag.low=5,h.low=20)
 }

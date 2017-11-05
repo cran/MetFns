@@ -33,7 +33,7 @@ Argument \code{data} has to consist of the column named "Shower".
 \code{\link{filter}}
 }
 \examples{
-## select rate and magnitude data for 2015 Perseids
-filter.shw(rate2015,shw="PER")
-filter.shw(magn2015,shw="PER")
+## select rate and magnitude data for 2015 Geminids
+filter.shw(rate2015,shw="GEM")
+filter.shw(magn2015,shw="GEM")
 } 

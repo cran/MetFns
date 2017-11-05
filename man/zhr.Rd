@@ -27,16 +27,16 @@ character vector or factor specifying end date, given in \code{"\%Y-\%m-\%d \%H:
  numeric vector specifying population index of a meteor shower.
 }
    \item{kmin}{
-  numeric vector specifying minimum bin size, in degrees of solar longitude. By default, it is equal to 0.01.
+  numeric vector specifying minimum bin size, in degrees of solar longitude. By default, it is equal to 0.01. Minimum accepted value is 0.001.
 }
   \item{kmax}{
-  numeric vector specifying maximum bin size, in degrees of solar longitude. By default, it is equal to 1.
+  numeric vector specifying maximum bin size, in degrees of solar longitude. By default, it is equal to 1. Maximum accepted values is 5.
 }
 \item{num}{
-  numeric vector specifying total number of meteors per interval.
+  numeric vector specifying total number of meteors per interval. Minimum accepted value is 1.
 }
    \item{c.zhr}{
- numeric vector specifying value of ZHR correction. By default, it is equal to 0.5.
+ numeric vector specifying value of ZHR correction. By default, it is equal to 0.5. Accepted values are between 0 and 1.
 }
 
 \item{rdata}{
@@ -67,7 +67,7 @@ a Poisson distribution (distribution of the number of observed meteors).
 
 Standard error of the average zenithal rate is calculated by the formula
 
-\deqn{\sigma=\frac{\sqrt{c+\sum_i N_i}}{\sum_i \frac{T_{eff,i}}{C_i}}, i=1,2,...,k}{sigma=sqrt(c+sum_i N_i)/(sum_i T_{eff,i}/C_i), i=1,2,...,k}.
+\deqn{st.error=\frac{\sqrt{c+\sum_i N_i}}{\sum_i \frac{T_{eff,i}}{C_i}}, i=1,2,...,k}{st.error=sqrt(c+sum_i N_i)/(sum_i T_{eff,i}/C_i), i=1,2,...,k}.
 
 
 The spatial number density of meteoroids producing meteors of magnitude at least 6.5 is (per \eqn{10^9km^3})
@@ -92,9 +92,9 @@ Data frame containing following vectors
    \item{nINT}{numeric Number of observing time intervals}
    \item{nSHW}{numeric Number of observed meteors. String SHW is replaced with the code of meteor shower.}
    \item{ZHR}{numeric Zenithal Hourly Rate}
-   \item{st.err}{numeric Standard error of ZHR}
+   \item{st.error}{numeric Standard error of ZHR}
    \item{density}{numeric Spatial number density} 
-   \item{dens.err}{numeric Standard error of spatial number density}
+   \item{dens.error}{numeric Standard error of spatial number density}
 }
 }
 \references{
@@ -111,23 +111,18 @@ Kristina Veljkovic
 \code{\link{zhr.plot}},\code{\link{pop.index2}}
 }
 \examples{
-## calculate ZHR for observations of 2015 Orionids, time period 
-## 10th to 25th October, min bin size 0.1 degree, max bin size 1 degree, 
-## number of meteors equals 100 
-## First select rate data for Orionids activity from 10th to 25th October, 
+## calculate ZHR for observations of 2015 Orionids, time period around maximum,
+## 2th to 25th October, min bin size 0.1 degree, max bin size 1 degree, 
+## number of meteors equals 100, population index calculated from magnitude data
+## First select rate data for Orionids activity from 21th to 25th October, 
 ## limiting magnitudes above 5, radiant elevation above 20 degrees, percentage of clouds below 20
-ori2015<-filter(rate2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
-P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
-zhr(ori2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",r=2.5,
-kmin=0.1,kmax=1,num=100)
-
-## include in calculation of ZHR population index calculated from magnitude data
-## see further details in example for pop.index2
-ori2015mag<-filter(magn2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
-P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
-oripop<-pop.index2(ori2015mag,date.start="2015-10-10",date.end="2015-10-25",
-shw="ORI",kmin=0.5,kmax=2,num=100)
-zhr(ori2015,date.start="2015-10-10",date.end="2015-10-25",shw="ORI",
+ori2015<-filter(rate2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",
+P.up=20,mag.low=5,mag.up=8,h.low=20)
+ori2015mag<-filter(magn2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",
+P.up=20,mag.low=5,h.low=20)
+oripop<-pop.index2(ori2015mag,date.start="2015-10-21",date.end="2015-10-25",
+shw="ORI",kmin=0.1,kmax=1,num=100)
+zhr(ori2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",
 kmin=0.1,kmax=1,num=100,rdata=oripop)
 }
 

@@ -7,7 +7,7 @@ Selection of visual meteor data by total correction factor
 Selects data for a given visual meteor rate dataset, specified shower, population index and total correction factor.
 }
 \usage{
-filter.totcor(data,shw,r,C = 5)
+filter.totcor(data,shw,r,C)
 }
 \arguments{
   \item{data}{
@@ -20,7 +20,7 @@ character string consisting of three capital letters which represent meteor show
 numeric vector specifying population index of a meteor shower.
 }
   \item{C}{
-numeric vector specifying total correction factor. C=5 is set as a default value.
+numeric vector specifying upper boundary of total correction factor. 
 }
 }
 \details{
@@ -53,6 +53,6 @@ Argument \code{data} has to consist of the columns named "Latitude", "Longitude"
 ## select 2015 visual meteor rate data during the period between 10-25 October and then
 ## select observations of Orionids with total correction factor smaller or equal to 5
 rateOct<-filter.date(rate2015,date.start="2015-10-10",date.end="2015-10-25")
-filter.totcor(rateOct,shw="ORI",r=2.5)
+filter.totcor(rateOct,shw="ORI",r=2.5,C=5)
 }
 

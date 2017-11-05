@@ -1,13 +1,20 @@
 opt.bin<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
 {
-   if(!is.data.frame(data) || !is.numeric(c(kmax,num)))
-      stop("invalid input parameter(s) specification: check data/kmax/num")
+   if(!is.data.frame(data))
+      stop("Invalid input parameter specification: check data")
+      
+   if(!is.numeric(c(kmin,kmax,num)) || kmin<0.001 || kmax>5 || num<1)
+      stop("Invalid input parameter(s) specification: check value(s) of kmin/kmax/num")
+      
+   if(!(all(c("Start.Date","End.Date","Number")%in%names(data))))
+     stop("Error: data does not contain columns named Start.Date, End.Date and Number")
+
 
    sol1<-date_sollong(date.start)
    sol2<-date_sollong(date.end)
 
    data.shw<-filter(data,shw=shw,sol.low=sol1, sol.up=sol2)
-   obs.len<-round(solar.long(data.shw$End.Date)-solar.long(data.shw$Start.Date),3)
+   obs.len<-solar.long(data.shw$End.Date)-solar.long(data.shw$Start.Date)
    if(!("sine.h"%in%names(data.shw))) data.shw<-sinh(data.shw,shw)
    datashw<-cbind(data.shw,obs.len)
    o<-order(datashw$Sollong)
@@ -28,7 +35,7 @@ opt.bin<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
     j<-which(ind)
     if(any(v)){
       for(k in min(which(v)):max(which(v))){
-       bin<-round(datashw2$Sollong[i+k-1]-p1,3)
+       bin<-datashw2$Sollong[i+k-1]-p1
        beg<-1
        end<-k
        ind2<-datashw2$obs.len[i:(i+k-1)]<=bin
@@ -39,7 +46,7 @@ opt.bin<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
          break}
         beg<-min(which(ind2))
         end<-max(which(ind2))
-        bin<-round(datashw2$Sollong[end+i-1]-datashw2$Sollong[beg+i-1],3)
+        bin<-datashw2$Sollong[end+i-1]-datashw2$Sollong[beg+i-1]
         ind2<-datashw2$obs.len[i:(i+k-1)]<=bin
       }
        if(any(flag)){break}

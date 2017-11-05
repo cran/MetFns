@@ -1,7 +1,19 @@
 pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
 { 
-   if(!is.data.frame(data) || !is.numeric(k))
-      stop("invalid input parameter(s) specification: check data/k")  
+   if(!is.data.frame(data))
+      stop("Invalid input parameter specification: check data")  
+      
+   if(!is.numeric(mag.range) || !all(mag.range%in%(-6:7)))
+      stop("Invalid input parameter specification: check values of mag.range")
+      
+   if(!is.numeric(k) || k<0.001 || k>5)
+      stop("Invalid input parameter specification: check value of k")   
+      
+   if(!(all(c("Start.Date","End.Date","F","Lmg","Mag.N6","Mag.N5","Mag.N4","Mag.N3","Mag.N2","Mag.N1",
+              "Mag.0","Mag.1","Mag.2","Mag.3","Mag.4","Mag.5","Mag.6","Mag.7","Number")%in%names(data))))
+     stop("Error: data does not contain columns named Start.Date, End.Date, F, Lmg, Mag.N6, Mag.N5, 
+           Mag.N4, Mag.N3, Mag.N2, Mag.N1, Mag.0, Mag.1,Mag.2, Mag.3, Mag.4, Mag.5, Mag.6, Mag.7 and Number")
+
      
    sol1<-date_sollong(date.start)
    sol2<-date_sollong(date.end)
@@ -19,7 +31,7 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
    datashw2<-datashw[datashw$obs.len<=k,]
    
    results<-as.data.frame(replicate(7,numeric(0)))
-   names(results)=c("sollong","date","mag","nINT","nSHW","pop.index","sigma.r")
+   names(results)=c("sollong","date","mag","nINT","nSHW","pop.index","r.error")
 
    deltam<-(-4:74)/10
    p<-c(0.00046,0.00074,0.0011,0.0016,0.0023,0.0033,0.0046,0.0063,0.0081,0.0100,0.0122,
@@ -60,12 +72,12 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
        a_est<-sum(m*y)/sum(m^2)
        pop.index<-exp(a_est)
        var.a<-sum((y-a_est*m)^2)/((length(m)-2)*sum(m^2))
-       sigma.r<-pop.index*sqrt(exp(var.a)*(exp(var.a)-1)) 
-    } else{pop.index<-sigma.r<-NA}
+       r.error<-pop.index*sqrt(exp(var.a)*(exp(var.a)-1)) 
+    } else{pop.index<-r.error<-NA}
                   
     nINT<-nrow(datashw2[ind,])
     nSHW<-sum(datashw2$Number[ind])
-    results<-rbind(results,data.frame(sollong,date,mag,nINT,nSHW,pop.index,sigma.r))
+    results<-rbind(results,data.frame(sollong,date,mag,nINT,nSHW,pop.index,r.error))
          
  
     i<-max(which(ind))+1
@@ -75,7 +87,7 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
    
   names(results)[5]<-paste("n",shw,sep="") 
   results$pop.index<-round(results$pop.index,2)
-  results$sigma.r<-round(results$sigma.r,2)
+  results$r.error<-round(results$r.error,2)
  
  
   

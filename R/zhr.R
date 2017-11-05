@@ -1,7 +1,20 @@
 zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5,rdata=NULL)
 { 
-   if((is.null(r)&& (!is.data.frame(rdata)|| !("sollong"%in%names(rdata))|| !("pop.index"%in%names(rdata)))))
-      stop("invalid input parameter(s) specification: check r/rdata")
+   if(is.null(r)&& !is.data.frame(rdata))
+      stop("Invalid input parameter specification: specify value of r or dataframe rdata with calculated population index values")
+   
+   if(!(is.null(r))&& (r<1.5 || r>4.5))
+      stop("Invalid input parameter specification: check value of r")
+      
+   if(is.null(r)&& is.data.frame(rdata) && (!("sollong"%in%names(rdata))|| !("pop.index"%in%names(rdata))))
+      stop("Error: rdata does not contain columns named sollong and pop.index")
+      
+   if(!is.numeric(c.zhr) || c.zhr<0 || c.zhr>1)
+      stop("Invalid input parameter specification: check value of c.zhr")
+   
+   if(!(all(c("Teff","F","Lmg")%in%names(data))))
+     stop("Error: data does not contain columns named Teff, F and Lmg")
+      
    
    data(shw_list,envir=environment())
    shw_list<-get("shw_list",envir=environment())  
@@ -13,7 +26,7 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
    
    results<-as.data.frame(replicate(8,numeric(0)))
    names(results)<-c("sollong","date","nINT","nSHW",
-                     "ZHR","st.err","density","dens.err")
+                     "ZHR","st.error","density","dens.error")
 
    blocks<-opt.bin(data,date.start,date.end,shw,kmin,kmax,num)
    
@@ -32,12 +45,12 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
     nINT<-nrow(blocks[[j]])
     T<-sum(Ti)
     ZHR<-(nSHW+c.zhr)/T
-    st.err<-sqrt(nSHW+c.zhr)/T
+    st.error<-sqrt(nSHW+c.zhr)/T
     density<-(10.65*r-12.15)*ZHR/(3600*178700*r^(-1.82)*V)*10^9
-    dens.err<-density*st.err/ZHR
+    dens.error<-density*st.error/ZHR
   
-    results<-rbind(results,data.frame(sollong,date,nINT,nSHW,ZHR,st.err,density,
-                               dens.err))
+    results<-rbind(results,data.frame(sollong,date,nINT,nSHW,ZHR,st.error,density,
+                               dens.error))
                  
       
        

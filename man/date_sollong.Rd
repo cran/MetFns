@@ -14,14 +14,20 @@ date_sollong(date,prec=4)
 character vector or factor of length one specifying date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
 }
 \item{prec}{
-numeric vector specifying number of decimals of calculated solar longitude (between 0 and 11 decimals). By default, it is equal to 4.
+numeric vector specifying number of decimals of calculated solar longitude (between 2 and 5 decimals). By default, it is equal to 4.
 }
+}
+\details{
+Solar longitude is calculated applying VSOP87 theory, using coefficients from data \code{EarthVSOP87B}.
 }
 \value{
 \code{sollong} returns solar longitude, numeric vector of length one.
 }
 \references{
-Steyaert C. (1991). Calculating the Solar Longitude 2000.0, \emph{WGN, Journal of the IMO}, 19:2, 31-34.
+Meeus, J. (1998). Astronomical algorithms (Second Edition).  Willmann-Bell, Inc., Richmond, Virginia, p. 219.
+
+\url{http://neoprogrammics.com/vsop87}
+
 }
 \author{
 Kristina Veljkovic
@@ -33,7 +39,7 @@ Hour, seconds and minutes does not have to be provided in function call.
 \code{\link{solar.long},\link{sollong_date}}
 }
 \examples{
-## calculate solar longitude corresponding to March 7, 2016, at 02:41 UTC, rounded to 3 decimals
-date_sollong(date="2016-03-07 02:41",prec=3)
+## calculate solar longitude corresponding to March 7, 2016, at 02:41 UTC
+date_sollong(date="2016-03-07 02:41")
 }
 

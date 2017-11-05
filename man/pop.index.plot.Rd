@@ -7,11 +7,11 @@ Plot of population index
 for data containing population index values and given limits on x and y axes.
 }
 \usage{
-pop.index.plot(data,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
+pop.index.plot(rdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
 }
 \arguments{
-  \item{data}{
- data frame consisting of visual meteor magnitude data.
+  \item{rdata}{
+ data frame consisting of population index values.
 }
 \item{xlim1}{
   numeric vector specifying minimum value on x-axis.
@@ -32,6 +32,9 @@ pop.index.plot(data,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
   numeric vector specifying increment between labels on y-axis.
 }
 }
+\details{
+\code{rdata} represents table of population index values calculated using functions \code{pop.index} or \code{pop.index2}.
+}
 \value{
 xy plot of population index is made. Solar longitude is on x-axis and population index on y-axis. Population index is represented with black filled circles and \emph{68\%} confidence intervals.
 Values of limits (minimum and maximum values) on x and y axis (\code{xlim1,xlim2,ylim1,ylim2}), as well as increments between the axis labels
@@ -48,15 +51,15 @@ Kristina Veljkovic
 }
 \examples{
 ## calculate and make plot of population index for observations of 2015 Orionids, time period 
-## 10th to 25th October, min bin size 0.5 degree, max bin size 2 degrees, 
+## around maximum, 21th to 25th October, min bin size 0.1 degree, max bin size 1 degrees, 
 ## number of meteors equals 100 
-## First select magnitude data for Orionids activity from 10th to 25th October, 
+## First select magnitude data for Orionids activity from 21th to 25th October, 
 ## limiting magnitudes above 5, radiant elevation above 20 degrees, percentage of clouds below 20
-ori2015mag<-filter(magn2015,date.start="2015-10-10",date.end="2015-10-25",
-shw="ORI",P.low=0,P.up=20,mag.low=5,mag.up=8,h.low=20,h.up=90)
-oripop<-pop.index2(ori2015mag,date.start="2015-10-10",date.end="2015-10-25",
-shw="ORI",kmin=0.5,kmax=2,num=100)
-pop.index.plot(oripop,xlim1=197,xlim2=211,xinc=1,ylim1=1.4,ylim2=3.4,yinc=0.2)
+ori2015mag<-filter(magn2015,date.start="2015-10-21",date.end="2015-10-25",
+shw="ORI",P.up=20,mag.low=5,h.low=20)
+oripop<-pop.index2(ori2015mag,date.start="2015-10-21",date.end="2015-10-25",
+shw="ORI",kmin=0.1,kmax=1,num=100)
+pop.index.plot(oripop,xlim1=207,xlim2=211,xinc=1,ylim1=1.5,ylim2=2.5,yinc=0.2)
 
 }
 

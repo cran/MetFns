@@ -1,24 +1,23 @@
-sinh<-function(data,shw, Ralpha=NULL, Delta=NULL)
+sinh<-function(data,shw)
 {
   data.shw<-filter.shw(data,shw)
   midtime<-midint(data.shw)
   ew<-rep("E",nrow(data.shw))
   ew[data.shw$Longitude<0]<-"W"  
 
-  if(is.null(Ralpha) || is.null(Delta)){
-    Ralpha<-Delta<-rep(NA,nrow(data.shw))
-    data(radiant,envir=environment())
-    radiant<-get("radiant",envir=environment())
-    k<-which(substr(names(radiant),start=1,stop=3)==shw)[1]
-    radiant.shw<-radiant[which(!is.na(radiant[,k])),c(1,2,k,k+1)]
+  Ralpha<-Delta<-rep(NA,nrow(data.shw))
+  data(radiant,envir=environment())
+  radiant<-get("radiant",envir=environment())
+  k<-which(substr(names(radiant),start=1,stop=3)==shw)[1]
+  radiant.shw<-radiant[which(!is.na(radiant[,k])),c(1,2,k,k+1)]
     
-    for(i in 1:nrow(radiant.shw)){
+   for(i in 1:nrow(radiant.shw)){
         ind<-month(midtime)%in%radiant.shw$Month[i] &day(midtime)%in%radiant.shw$Day[i]
         Ralpha[ind]<-radiant.shw[i,3]
         Delta[ind]<-radiant.shw[i,4] }
         
         
-  } 
+  
      
   t<-suppressWarnings(hms2rad(ut2ha(midtime, ra.sou=paste(as.character(Ralpha*24/360),"h",sep=""), 
               lon.obs=paste(ew,paste(abs(data.shw$Longitude),"d",sep=""),sep=" "))))

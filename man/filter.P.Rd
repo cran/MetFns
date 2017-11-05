@@ -8,17 +8,17 @@ Selects data for a given visual meteor rate dataset and specified percentage or 
 of field-of-view obstruction.
 }
 \usage{
-filter.P(data,P.low = 0,P.up = 20)
+filter.P(data,P.low = 0,P.up = 90)
 }
 \arguments{
   \item{data}{
 data frame consisting of visual meteor rate data.
 }
   \item{P.low}{
-numeric vector with value between 0 (default) and 100, specifying lower boundary of percentage of field-of-view obstruction. 
+numeric vector with value between 0 (default) and 90, specifying lower boundary of percentage of field-of-view obstruction. 
 }
   \item{P.up}{
-numeric vector with value between 0 and 100, specifying upper boundary of percentage of field-of-view obstruction. Default value is 20.
+numeric vector with value between 0 and 90 (default), specifying upper boundary of percentage of field-of-view obstruction.
 }
 }
 \value{
@@ -42,5 +42,5 @@ Argument \code{data} has to consist of the column named "P".
 ## select visual meteor rate data for the period between 10-25th October 2015 and 
 ## percentage of field-of-view obstruction below 20%
 rateOct<-filter.date(rate2015,date.start="2015-10-10",date.end="2015-10-25")
-filter.P(rateOct)
+filter.P(rateOct,P.up=20)
 }

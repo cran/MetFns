@@ -14,7 +14,7 @@ solar.long(date,prec=4)
 character vector or factor specifying dates, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
 }
 \item{prec}{
-numeric vector specifying number of decimals of calculated solar longitude (between 0 and 11 decimals). By default it is equal to 4.
+numeric vector specifying number of decimals of calculated solar longitude (between 2 and 5 decimals). By default it is equal to 4.
 }
 }
 \details{

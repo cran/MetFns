@@ -1,5 +1,12 @@
 pop.index2<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
 { 
+   if(!(all(c("F","Lmg","Mag.N6","Mag.N5","Mag.N4","Mag.N3","Mag.N2","Mag.N1",
+              "Mag.0","Mag.1","Mag.2","Mag.3","Mag.4","Mag.5","Mag.6","Mag.7")%in%names(data))))
+     stop("Error: data does not contain columns named F, Lmg, Mag.N6, Mag.N5, 
+           Mag.N4, Mag.N3, Mag.N2, Mag.N1, Mag.0, Mag.1,Mag.2, Mag.3, Mag.4, Mag.5, Mag.6 and Mag.7")
+
+   
+   
    data(popind,envir=environment())
    popind<-get("popind",envir=environment())
    

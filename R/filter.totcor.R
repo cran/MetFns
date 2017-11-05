@@ -1,7 +1,14 @@
-filter.totcor<-function(data,shw,r,C=5)
+filter.totcor<-function(data,shw,r,C)
 {
- if(!is.numeric(c(r,C)) || (C<1) || (r<1.5) || (r>4.5)) 
-      stop("invalid input parameter(s) specification: check r/C")
+ if(!is.numeric(r) || r<1.5 || r>4.5) 
+      stop("Invalid input parameter specification: check value of r")
+      
+ if(!is.numeric(C) || C<1) 
+      stop("Invalid input parameter specification: check value of C")
+ 
+ if(!(all(c("F","Lmg")%in%names(data))))
+     stop("Error: data does not contain columns named F and Lmg")
+      
 
  elev.data<-sinh(data,shw)
  m<-ncol(elev.data)

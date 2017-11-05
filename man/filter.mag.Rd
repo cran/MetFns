@@ -7,17 +7,17 @@ Selection of visual meteor data by limiting magnitude
 Selects data for a given visual meteor dataset and specified limiting magnitude or interval of magnitudes.
 }
 \usage{
-filter.mag(data,mag.low=0,mag.up = 8)
+filter.mag(data,mag.low=1,mag.up = 8)
 }
 \arguments{
   \item{data}{
 data frame consisting of visual meteor rate data.
 }
   \item{mag.low}{
-numeric vector with value between 0 (default) and 8, specifying lower boundary of limiting magnitude.
+numeric vector with value between 1 (default) and 8, specifying lower boundary of limiting magnitude.
 }
   \item{mag.up}{
-numeric vector with value between 0 and 8 (default), specifying upper boundary of limiting magnitude.
+numeric vector with value between 1 and 8 (default), specifying upper boundary of limiting magnitude.
 }
 }
 \value{
@@ -38,7 +38,7 @@ Argument \code{data} has to consist of the column named "Lmg".
 rate_13.08<-filter.date(rate2015,date.start="2015-08-13",date.end="2015-08-13")
 filter.mag(rate_13.08,mag.low=5.5,mag.up=6.5)
 
-## select visual meteor rate data for the 13th August 2015 and limiting magnitude above 5.5
-filter.mag(rate_13.08,mag.low=5.5)
+## select visual meteor rate data for the 13th August 2015 and limiting magnitude above 6
+filter.mag(rate_13.08,mag.low=6)
 }
 

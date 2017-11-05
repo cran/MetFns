@@ -4,10 +4,10 @@
 Calculation of date corresponding to given value of solar longitude
 }
 \description{
-Calculates calendar date and time corresponding to specified value of solar longitude.
+Calculates calendar date and time corresponding to specified value of solar longitude (J2000.0).
 }
 \usage{
-sollong_date(solval,date1,date2,unit="minute")
+sollong_date(solval,date1,date2)
 }
 \arguments{
 \item{solval}{
@@ -19,13 +19,10 @@ character vector specifying start date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"
 \item{date2}{
 character vector specifying end date, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone). 
 }
-\item{unit}{
-character vector specifying time unit to be result rounded to. Possible values are "minute"(default) and "second".
-}
 }
 \details{
 The function \code{sollong_date} calculates date corresponding to the given value of solar longitude. It searches for a solution in a interval
-bounded by \code{date1} and \code{date2}.
+bounded by \code{date1} and \code{date2}. 
 }
 \value{
 \code{sollong_date} returns object of POSIXct class, calendar date in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
@@ -33,7 +30,10 @@ bounded by \code{date1} and \code{date2}.
 \author{
 Kristina Veljkovic
 }
-\note{Arguments \code{date1} and \code{date2} should belong to the same year.}
+\note{Arguments \code{date1} and \code{date2} should belong to the same year. 
+
+Date corresponding to the zero longitude is returned only for years between 1984. and 2030. Also, calculation of dates corresponding to the specified value \code{solval} for \code{date1} before March equinox (with respect to J2000.0) and \code{date2} after March equinox (with respect to J2000.0), is possible only for years 1984-2030. Otherwise, user will be asked to change values of \code{date1} or \code{date2}.
+}
 \seealso{
 \code{\link{date_sollong}}
 }
