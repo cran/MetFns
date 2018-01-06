@@ -21,19 +21,25 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
    V<-shw_list$V[shw_list$Shw==shw]
    rconst<-shw_list$r[shw_list$Shw==shw]
    
+   year<-year(date.start)
 
 
    
    results<-as.data.frame(replicate(8,numeric(0)))
    names(results)<-c("sollong","date","nINT","nSHW",
                      "ZHR","st.error","density","dens.error")
-
-   blocks<-opt.bin(data,date.start,date.end,shw,kmin,kmax,num)
+                     
+   zerolong<-sollong_date(0,year)
+                     
+   if(zerolong>=as.POSIXct(date.start,tz="UTC") && zerolong<=as.POSIXct(date.end,tz="UTC")){
+    blocks<-c(opt.bin(data,date.start,round_date(zerolong-30,unit="minute"),shw,kmin,kmax,num),
+              opt.bin(data,round_date(zerolong+30,unit="minute"),date.end,shw,kmin,kmax,num))
+   }else{blocks<-opt.bin(data,date.start,date.end,shw,kmin,kmax,num)}
    
    
     for(j in 1:length(blocks)){
     sollong<-round(weighted.mean(blocks[[j]]$Sollong,blocks[[j]]$Teff*blocks[[j]]$sine.h/(blocks[[j]]$F*rconst^(6.50-blocks[[j]]$Lmg))),3)
-    date<-sollong_date(sollong,date.start,date.end)
+    date<-sollong_date(sollong,year,date.start,date.end)
     
      if(is.null(r))                                                              
        r<-spline(rdata$sollong,rdata$pop.index,method="natural",xout=sollong)$y

@@ -1,26 +1,30 @@
-sollong_date<-function(solval,date1,date2)
+sollong_date<-function(solval,year, date1=NULL,date2=NULL)
 {
   if(!is.numeric(solval) || solval<0 || solval>360)
    stop("Invalid parameter specification: check value of solval")
    
-  date1.new<-tryCatch(as.POSIXct(date1,tz="UTC"),error=function(e){return(NA)})
-  date2.new<-tryCatch(as.POSIXct(date2,tz="UTC"),error=function(e){return(NA)})
+  if(!is.numeric(year) || year<1984 || year>2030)
+   stop("Invalid parameter specification: check value of year")
+   
+  beg<-paste(as.character(year),"-01-01", sep="") 
   
-  if(is.na(date1.new) || is.na(date2.new))
+  if(!is.null(date1) && !is.null(date2)) {
+   date1.new<-tryCatch(as.POSIXct(date1,tz="UTC"),error=function(e){return(NA)})
+   date2.new<-tryCatch(as.POSIXct(date2,tz="UTC"),error=function(e){return(NA)})
+  
+   if(is.na(date1.new) || is.na(date2.new))
      stop("Invalid input parameter(s) specification: check date1 and date2 format")
  
-  if(year(date1.new)!=year(date2.new))
+   if(year(date1.new)!=year && year(date2.new)!=year)
    stop("Invalid parameter specification: years of date1 and date2 do not match")
+  }else{
+   date1.new<-as.POSIXct(beg,tz="UTC")
+   date2.new<-as.POSIXct(paste(as.character(year),"-12-31", sep="") ,tz="UTC")
+  }
+  
    
-  year<-year(date1.new)
   years<-1984:2030
    
-  if(solval==0 && !(year%in%years))
-   stop("Error: Date with zero longitude can be calculated only for years 1984-2030")
-   
-   
-  
-  beg<-paste(as.character(year),"-01-01", sep="") 
   long0<-as.POSIXct(c("1984-03-20 04:49:50","1985-03-20 11:01:00","1986-03-20 17:11:48","1987-03-20 23:23:21",
            "1988-03-20 05:32:38","1989-03-20 11:44:41","1990-03-20 17:57:52","1991-03-21 00:02:01",
            "1992-03-20 06:08:59","1993-03-20 12:21:56","1994-03-20 18:28:33","1995-03-21 00:33:32",
@@ -41,13 +45,7 @@ sollong_date<-function(solval,date1,date2)
   
   
   sol<-function(x){
-     date_sollong(as.POSIXct(x,origin=beg,tz="UTC"),prec=5)-solval}
-  
-  if(!(year%in%years) && sol(t1)>0 )
-   stop("Error: Provide date1 after the date of March equinox (with respect to J2000.0)")
-   
-  if(!(year%in%years) && sol(t2)<0 )
-   stop("Error: Provide date2 before the date of March equinox (with respect to J2000.0)")    
+     date_sollong(as.POSIXct(x,origin=beg,tz="UTC"),prec=5)-solval}    
      
   if(sol(t2)<0) t2<-t0-1
   if(sol(t1)>0) t1<-t0

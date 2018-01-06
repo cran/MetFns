@@ -1,4 +1,3 @@
-solar.long_date<-function(solval,date1,date2){
-  as.POSIXct(mapply(sollong_date,solval,date1,date2),origin="1970-01-01",tz="UTC")
-  
+solar.long_date<-function(solval,year){
+  as.POSIXct(mapply(sollong_date,solval,year),origin="1970-01-01",tz="UTC")
 }

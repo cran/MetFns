@@ -17,6 +17,7 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
      
    sol1<-date_sollong(date.start)
    sol2<-date_sollong(date.end)
+   year<-year(date.start)
    
    data(shw_list,envir=environment())
    shw_list<-get("shw_list",envir=environment())
@@ -49,7 +50,7 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
     ind<-datashw2$Sollong>=p1 & datashw2$Sollong<=min(c(sol2,p1+k))
     
     sollong<-round(weighted.mean(datashw2$Sollong[ind],datashw2$Number[ind]*datashw2$sine.h[ind]/(datashw2$F[ind]*r^(6.50-datashw2$Lmg[ind]))),3)
-    date<-sollong_date(sollong,date.start,date.end)
+    date<-sollong_date(sollong,year,date.start,date.end)
     
     deltam.obs<-round(rep(datashw2$Lmg[ind],each=14)-mag.val,1)
     coef<-p[match(deltam.obs,deltam)]

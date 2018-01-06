@@ -7,7 +7,10 @@ filter.date<-function(data,date.start,date.end)
   date2<-tryCatch(as.POSIXct(date.end,tz="UTC"),error=function(e){return(NA)})
  
   if(is.na(date1) || is.na(date2))
-     stop("invalid input parameter specification: check date start/date.end format")
+     stop("Invalid input parameter specification: check date start/date.end format")
+     
+  if(date1>date2)
+     stop("Error:date.end must be greater than date.start")
     
      
   mid.int<-midint(data)

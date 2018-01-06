@@ -18,7 +18,7 @@ pop.index2<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
    r<-shw_list$r[shw_list$Shw==shw]
 
 
-   
+   year<-year(date.start)
    
    results<-as.data.frame(replicate(6,numeric(0)))
    names(results)<-c("sollong","date","nINT","nSHW","pop.index","r.error")
@@ -30,12 +30,18 @@ pop.index2<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
    z<-matrix(popind.err$r.err,nrow=21,ncol=18,byrow=T)
 
 
-    blocks<-opt.bin(data,date.start,date.end,shw,kmin,kmax,num)
+   zerolong<-sollong_date(0,year)
+                     
+   if(zerolong>=as.POSIXct(date.start,tz="UTC") && zerolong<=as.POSIXct(date.end,tz="UTC")){
+    blocks<-c(opt.bin(data,date.start,round_date(zerolong-30,unit="minute"),shw,kmin,kmax,num),
+              opt.bin(data,round_date(zerolong+30,unit="minute"),date.end,shw,kmin,kmax,num))
+   }else{blocks<-opt.bin(data,date.start,date.end,shw,kmin,kmax,num)}
+   
     
     for(j in 1:length(blocks)){
              
     sollong<-round(weighted.mean(blocks[[j]]$Sollong,blocks[[j]]$Number*blocks[[j]]$sine.h/(blocks[[j]]$F*r^(6.50-blocks[[j]]$Lmg))),3)
-    date<-sollong_date(sollong,date.start,date.end)
+    date<-sollong_date(sollong,year,date.start,date.end)
     
     
 

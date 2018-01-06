@@ -3,6 +3,19 @@ graph.data<-function(x,y,width,ytitle,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
   if(!is.numeric(c(x,y,width,xlim1,xlim2,xinc,ylim1,ylim2,yinc)))
       stop("Invalid input parameter(s) specification: check values of x/y/width/xlim1/xlim2/xinc/ylim1/ylim2/yinc")
   
+  if(xlim2<xlim1)
+      stop("Invalid input parameter specification:xlim2 should be greater than xlim1")
+  
+  if(ylim2<ylim1)
+      stop("Invalid input parameter specification:ylim2 should be greater than ylim1")
+  
+  if(xinc>xlim2-xlim1 || xinc<0)
+      stop("Invalid input parameter specification:check value of xinc")
+  
+  if(yinc>ylim2-ylim1 || yinc<0)
+      stop("Invalid input parameter specification:check value of yinc")
+  
+  
   if(!is.character(ytitle))
       stop("Invalid input parameter specification: check ytitle")
 

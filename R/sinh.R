@@ -15,13 +15,15 @@ sinh<-function(data,shw)
         ind<-month(midtime)%in%radiant.shw$Month[i] &day(midtime)%in%radiant.shw$Day[i]
         Ralpha[ind]<-radiant.shw[i,3]
         Delta[ind]<-radiant.shw[i,4] }
-        
-        
+   
+   indRD<-!is.na(Ralpha)
+   data.shw<-data.shw[indRD,]
+       
   
      
-  t<-suppressWarnings(hms2rad(ut2ha(midtime, ra.sou=paste(as.character(Ralpha*24/360),"h",sep=""), 
-              lon.obs=paste(ew,paste(abs(data.shw$Longitude),"d",sep=""),sep=" "))))
-  sine.h<-round(sin(dms2rad(Delta))*sin(dms2rad(data.shw$Latitude))+cos(dms2rad(Delta))*cos(dms2rad(data.shw$Latitude))*cos(t),3)
+  t<-hms2rad(ut2ha(midtime[indRD], ra.sou=paste(as.character(Ralpha[indRD]*24/360),"h",sep=""), 
+              lon.obs=paste(ew[indRD],paste(abs(data.shw$Longitude),"d",sep=""),sep=" ")))
+  sine.h<-round(sin(dms2rad(Delta[indRD]))*sin(dms2rad(data.shw$Latitude))+cos(dms2rad(Delta[indRD]))*cos(dms2rad(data.shw$Latitude))*cos(t),3)
   cbind(data.shw,sine.h)
 }
 

@@ -9,7 +9,7 @@ Coordinates of radiants of meteor showers during the year.
 }
 \usage{radiant}
 \format{
-  A data frame with 365 observations on the following 74 variables.
+  A data frame with 365 observations on the following 80 variables.
   \describe{
     \item{\code{Day}}{numeric  Day of the month}
     \item{\code{Month}}{numeric  Month of the year}
@@ -49,8 +49,12 @@ Coordinates of radiants of meteor showers during the year.
     \item{\code{AUR.Delta}}{numeric  Declination of Aurigids radiant}
     \item{\code{SPE.Alpha}}{numeric  Right ascension of  September Epsilon-Perseids radiant}
     \item{\code{SPE.Delta}}{numeric  Declination of  September Epsilon-Perseids radiant}
+    \item{\code{CCY.Alpha}}{numeric  Right ascension of  Chi-Cygnids radiant}
+    \item{\code{CCY.Delta}}{numeric  Declination of  Chi-Cygnids radiant}
     \item{\code{DSX.Alpha}}{numeric  Right ascension of  Daytime Sextantids radiant}
     \item{\code{DSX.Delta}}{numeric  Declination of  Daytime Sextantids radiant}
+    \item{\code{OCT.Alpha}}{numeric  Right ascension of  October Camelopardalids radiant}
+    \item{\code{OCT.Delta}}{numeric  Declination of  October Camelopardalids radiant}
     \item{\code{DRA.Alpha}}{numeric  Right ascension of Draconids radiant}
     \item{\code{DRA.Delta}}{numeric  Declination of Draconids radiant}
     \item{\code{STA.Alpha}}{numeric  Right ascension of Southern Taurids radiant}
@@ -90,9 +94,11 @@ Coordinates of radiants of meteor showers during the year.
   }
 }
 \details{
-Coordinates of radiants of meteor showers are given on 5-days intervals on IMO site. Natural spline interpolation 
-was used to calculate radiant coordinates for in-between days.
+Coordinates of radiants of meteor showers are given on 5-days intervals on IMO site. Natural spline interpolation and extrapolation
+were used to calculate radiant coordinates for in-between days and outside the given period.
 }
 \source{
-Meteor Shower Calendar, \url{http://www.imo.net/files/meteor-shower/cal2017.pdf}
+Meteor Shower Calendar, \url{http://www.imo.net/files/meteor-shower/cal2018.pdf}
+
+List of Meteor Showers for MetRec V5.3, \url{http://www.metrec.org/download/metrec53win7/metrec.shw}
 }

@@ -14,8 +14,8 @@ opt.bin<-function(data,date.start,date.end,shw,kmin=0.01,kmax=1,num)
    sol2<-date_sollong(date.end)
 
    data.shw<-filter(data,shw=shw,sol.low=sol1, sol.up=sol2)
-   obs.len<-solar.long(data.shw$End.Date)-solar.long(data.shw$Start.Date)
    if(!("sine.h"%in%names(data.shw))) data.shw<-sinh(data.shw,shw)
+   obs.len<-solar.long(data.shw$End.Date)-solar.long(data.shw$Start.Date)
    datashw<-cbind(data.shw,obs.len)
    o<-order(datashw$Sollong)
    datashw<-datashw[o,]
