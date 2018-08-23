@@ -4,7 +4,7 @@
 Selection of visual meteor data by percentage of field-of-view obstruction
 }
 \description{
-Selects data for a given visual meteor rate dataset and specified percentage or interval of percentages
+Selects data for a given visual meteor dataset and specified percentage or interval of percentages
 of field-of-view obstruction.
 }
 \usage{
@@ -12,7 +12,7 @@ filter.P(data,P.low = 0,P.up = 90)
 }
 \arguments{
   \item{data}{
-data frame consisting of visual meteor rate data.
+data frame consisting of visual meteor data (rate or magnitude data).
 }
   \item{P.low}{
 numeric vector with value between 0 (default) and 90, specifying lower boundary of percentage of field-of-view obstruction. 

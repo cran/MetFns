@@ -30,7 +30,7 @@ containing observations which correspond to the specified dates.
 Kristina Veljkovic
 }
 \note{
-Hour, seconds and minutes do not have to be provided in function call.
+User can specify date without time (i.e. date at midnight) or date with hours and minutes (without seconds).
 
 Argument \code{data} has to consist of the columns named "Start.Date" and "End.Date".
 }

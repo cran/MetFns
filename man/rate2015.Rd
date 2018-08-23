@@ -9,7 +9,7 @@ Visual meteor rate data for the year 2015.
 }
 \usage{rate2015}
 \format{
-  A data frame with 27568 observations on the following 21 variables.
+  A data frame with 27408 observations on the following 21 variables.
   \describe{
     \item{\code{Rate.ID}}{numeric Rate ID number}
     \item{\code{Obs.Session.ID}}{numeric  Observing session ID number}
@@ -35,6 +35,6 @@ Visual meteor rate data for the year 2015.
   }
 }
 \source{
-Visual Meteor Database, \url{http://www.imo.net/observations/methods/visual-observation/}
+IMO Visual Meteor Database, \url{https://www.imo.net/members/imo_vmdb}
 }
 

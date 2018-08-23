@@ -1,4 +1,4 @@
-zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5,rdata=NULL)
+zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5,rdata=NULL,gamma=1)
 { 
    if(is.null(r)&& !is.data.frame(rdata))
       stop("Invalid input parameter specification: specify value of r or dataframe rdata with calculated population index values")
@@ -11,6 +11,9 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
       
    if(!is.numeric(c.zhr) || c.zhr<0 || c.zhr>1)
       stop("Invalid input parameter specification: check value of c.zhr")
+  
+   if(!is.numeric(gamma) || gamma<1 || gamma>2)
+      stop("Invalid input parameter specification: check value of gamma")
    
    if(!(all(c("Teff","F","Lmg")%in%names(data))))
      stop("Error: data does not contain columns named Teff, F and Lmg")
@@ -38,7 +41,7 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
    
    
     for(j in 1:length(blocks)){
-    sollong<-round(weighted.mean(blocks[[j]]$Sollong,blocks[[j]]$Teff*blocks[[j]]$sine.h/(blocks[[j]]$F*rconst^(6.50-blocks[[j]]$Lmg))),3)
+    sollong<-round(weighted.mean(blocks[[j]]$Sollong,blocks[[j]]$Teff*(blocks[[j]]$sine.h)^gamma/(blocks[[j]]$F*rconst^(6.50-blocks[[j]]$Lmg))),3)
     date<-sollong_date(sollong,year,date.start,date.end)
     
      if(is.null(r))                                                              
@@ -46,7 +49,7 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
     
    
     
-    Ti<-blocks[[j]]$Teff*blocks[[j]]$sine.h/(blocks[[j]]$F*r^(6.50-blocks[[j]]$Lmg))      
+    Ti<-blocks[[j]]$Teff*(blocks[[j]]$sine.h)^gamma/(blocks[[j]]$F*r^(6.50-blocks[[j]]$Lmg))      
     nSHW<-sum(blocks[[j]]$Number)
     nINT<-nrow(blocks[[j]])
     T<-sum(Ti)

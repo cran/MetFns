@@ -1,4 +1,4 @@
-pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
+pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k,gamma=1)
 { 
    if(!is.data.frame(data))
       stop("Invalid input parameter specification: check data")  
@@ -7,7 +7,10 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
       stop("Invalid input parameter specification: check values of mag.range")
       
    if(!is.numeric(k) || k<0.001 || k>5)
-      stop("Invalid input parameter specification: check value of k")   
+      stop("Invalid input parameter specification: check value of k") 
+  
+   if(!is.numeric(gamma) || gamma<1 || gamma>2)
+      stop("Invalid input parameter specification: check value of gamma") 
       
    if(!(all(c("Start.Date","End.Date","F","Lmg","Mag.N6","Mag.N5","Mag.N4","Mag.N3","Mag.N2","Mag.N1",
               "Mag.0","Mag.1","Mag.2","Mag.3","Mag.4","Mag.5","Mag.6","Mag.7","Number")%in%names(data))))
@@ -49,7 +52,7 @@ pop.index<-function(data,date.start,date.end,shw, mag.range=-6:7,k)
    while(i<=n){
     ind<-datashw2$Sollong>=p1 & datashw2$Sollong<=min(c(sol2,p1+k))
     
-    sollong<-round(weighted.mean(datashw2$Sollong[ind],datashw2$Number[ind]*datashw2$sine.h[ind]/(datashw2$F[ind]*r^(6.50-datashw2$Lmg[ind]))),3)
+    sollong<-round(weighted.mean(datashw2$Sollong[ind],datashw2$Number[ind]*(datashw2$sine.h[ind])^gamma/(datashw2$F[ind]*r^(6.50-datashw2$Lmg[ind]))),3)
     date<-sollong_date(sollong,year,date.start,date.end)
     
     deltam.obs<-round(rep(datashw2$Lmg[ind],each=14)-mag.val,1)

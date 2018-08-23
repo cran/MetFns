@@ -7,7 +7,7 @@ Calculation of population index
 for a given magnitude data, specified time period, magnitude values and bin size.
 }
 \usage{
-pop.index(data,date.start,date.end,shw,mag.range=-6:7,k)
+pop.index(data,date.start,date.end,shw,mag.range=-6:7,k,gamma=1)
 }
 \arguments{
   \item{data}{
@@ -27,6 +27,9 @@ character vector or factor specifying end date, given in \code{"\%Y-\%m-\%d \%H:
 }
 \item{k}{
   numeric vector specifying bin size in degrees of solar longitude. Minimum accepted value is 0.001 and maximum accepted value is 5.
+}
+\item{gamma}{
+  numeric vector specifying zenith exponent. It takes value between 1 (default) and 2.
 }
 
 }

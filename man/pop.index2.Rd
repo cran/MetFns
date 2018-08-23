@@ -7,7 +7,7 @@ Calculation of population index based on average distance from the limiting magn
 for a given magnitude data, specified time period, minimum and maximum bin size, and number of meteors.
 }
 \usage{
-pop.index2(data,date.start,date.end,shw,kmin=0.01,kmax=1,num) 
+pop.index2(data,date.start,date.end,shw,kmin=0.01,kmax=1,num,gamma=1) 
 }
 \arguments{
   \item{data}{
@@ -30,6 +30,9 @@ character vector or factor specifying end date, given in \code{"\%Y-\%m-\%d \%H:
 }
 \item{num}{
   numeric vector specifying total number of meteors per interval.
+}
+\item{gamma}{
+  numeric vector specifying zenith exponent. It takes value between 1 (default) and 2.
 }
 }
 \details{Optimal bin size algorithm is used. It searches for an optimal bin size between minimum bin size \code{kmin} and maximum bin size \code{kmax} with total number of meteors per bin \code{num}. If there are not enough meteors, a maximum bin size is used. For further calculations, only observing intervals with lengths smaller or equal to optimal bin are used. 

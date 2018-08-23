@@ -5,11 +5,11 @@
 Magnitude data for the year 2015
 }
 \description{
-Visual meteor magnitude dataset for the year 2015.
+Visual meteor magnitude data for the year 2015.
 }
 \usage{magn2015}
 \format{
-  A data frame with 9336 observations on the following 32 variables.
+  A data frame with 9264 observations on the following 32 variables.
   \describe{
     \item{\code{Magnitude.ID}}{numeric Magnitude ID number}
     \item{\code{Obs.Session.ID}}{numeric  Observing session ID number}
@@ -46,5 +46,5 @@ Visual meteor magnitude dataset for the year 2015.
   }
 }
 \source{
-Visual Meteor Database, \url{http://www.imo.net/observations/methods/visual-observation/}
+IMO Visual Meteor Database, \url{https://www.imo.net/members/imo_vmdb}
 }

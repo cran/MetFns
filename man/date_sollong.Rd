@@ -33,7 +33,7 @@ Meeus, J. (1998). Astronomical algorithms (Second Edition).  Willmann-Bell, Inc.
 Kristina Veljkovic
 }
 \note{
-Hour, seconds and minutes does not have to be provided in function call.
+User can specify date without time (i.e. date at midnight) or date with hours and minutes (without seconds).
 }
 \seealso{
 \code{\link{solar.long},\link{sollong_date}}

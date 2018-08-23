@@ -4,14 +4,14 @@
 Selection of visual meteor data by total correction factor
 }
 \description{
-Selects data for a given visual meteor rate dataset, specified shower, population index and total correction factor.
+Selects data for a given visual meteor dataset, specified shower, population index and total correction factor.
 }
 \usage{
 filter.totcor(data,shw,r,C)
 }
 \arguments{
   \item{data}{
-data frame consisting of visual meteor rate data.
+data frame consisting of visual meteor data (rate or magnitude data).
 }
   \item{shw}{
 character string consisting of three capital letters which represent meteor shower code.
@@ -28,9 +28,6 @@ Total correction factor accounts for all non-ideal observing conditions
 such as clouds, low radiant, low limiting magnitude.
 
 Total correction factor is equal to \eqn{C=\frac{F r^{(6.5-lmg)}}{\sin h}}{C=F*r^(6.5-lmg)\ sin(h)}, where \eqn{r} is population index, \eqn{lmg} limiting magnitude, \eqn{F} correction factor for field-of-view obstruction, \eqn{h} radiant elevation.
-
-If right ascension and declination of shower radiant are not specified, the values from the data frame
-\code{\link{radiant}} are used.
 }
 \value{
 \code{filter.totcor} returns data frame containing observations with total correction factors upper bounded (smaller or equal)
