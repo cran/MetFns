@@ -1,5 +1,5 @@
-d2aca089238ef44f7ed2bb9a60fefb4d *DESCRIPTION
-7e305b745a947038d901bd727868545f *NAMESPACE
+3948256e1645ba288970defc7237602f *DESCRIPTION
+71eff1a448b517a808c150488e5972de *NAMESPACE
 6d9d58f72343ed562740d3ba3cbf7365 *R/correct.F.R
 bec10f136f6671fcb389160ef34850dd *R/date_sol.table.R
 763ed23a82e8c64c6dff42f6913fec03 *R/date_sollong.R
@@ -16,12 +16,12 @@ ee01050a233b7e130c3b4c4363581755 *R/filter.obsname.R
 3b4db6b233d166a746e1b136464eebf2 *R/filter.site.R
 5a0ee41c4a36013a336adedc39858ae4 *R/filter.sol.R
 20c2ee13caae89706a1a953e4741068e *R/filter.totcor.R
-47f0412abf0c6237139b88cdc661e668 *R/graph.data.R
+0b4cd5f4ddcefdceebb79ee1ba907ea7 *R/graph.data.R
 8ebc330959aa43270dea347690314036 *R/mag.distr.r
 4a0126c903abf5f158665181fad9f4ea *R/midint.R
 a3d3885b7618677a6435782aacf08810 *R/opt.bin.R
 f3b13450f7f7b6c0fa9c295226a83648 *R/pop.index.R
-5bdf56d86b624f40ce40f8b1ef19d087 *R/pop.index.plot.R
+6a1194514281b910e7cc152580387eba *R/pop.index.plot.R
 e54e5adac4557f6d2ffa43f3e593e27b *R/pop.index2.R
 89d4920cfa327e1258084edf55bb5021 *R/rerr.reg.R
 0e55aacf023240522d14a018d5db353e *R/sinh.R
@@ -29,8 +29,8 @@ e54e5adac4557f6d2ffa43f3e593e27b *R/pop.index2.R
 e9b8ed4d89e0cf3636a31b72b7da891b *R/solar.long.R
 145ed0631a88c9a507257c1bce1be9fa *R/solar.long_date.R
 cb0c07338b94ec5b3eefc8849de8bb5e *R/sollong_date.R
-b6041b868e1c99f6210eda6467021ab0 *R/zhr.R
-7abef3be539550f2bb7e66538e2ab35f *R/zhr.plot.R
+08eb0c3b592a0c6bfc06acfa376d86cb *R/zhr.R
+52e2193075d27b4720f04187b617f1ea *R/zhr.plot.R
 beccc33ad178b992421e4e0061e14e2b *data/EarthVSOP87B.rda
 af36c884aa8891fa09c60fa6af3405e5 *data/magn2015.rda
 a2c5b4c76c83b0127ae72161e1758a41 *data/popind.err.rda
@@ -39,7 +39,7 @@ e6112ba1f7bd25a8cb236349dc693105 *data/radiant.rda
 062993d9393cc75e3839ccf36831831f *data/rate2015.rda
 03848db73f4b6dc9c2fb292854027726 *data/shw_list.rda
 0b20488f2de0c5df163862194e543814 *man/EarthVSOP87B.Rd
-bb6dc6e7909de45488949b2abcda8f7b *man/MetFns-package.Rd
+c8650b2f4b1bac4c1757999bf744d51a *man/MetFns-package.Rd
 47f463a6672e87d61498a9f1a607c7c6 *man/date_sol.table.Rd
 e6d38f9ce87cde26d696206538ec3ad2 *man/date_sollong.Rd
 376e27bbe20e35be593432bbb25a2ff5 *man/filter.P.Rd
@@ -57,9 +57,10 @@ aebb9612c13ade8594f21ee6675e43a6 *man/filter.totcor.Rd
 daf00687b8feb32c04c7f320dee5fae3 *man/mag.distr.Rd
 cb3dd52c618679adbdff8e27843bd34e *man/magn2015.Rd
 8f907e64949a9490d8e958d14ec02557 *man/midint.Rd
-988f24800a8ba9ebf01c4464c363489b *man/pop.index.Rd
-cb7fb4fed64c3cadf7ff503ae92cab08 *man/pop.index.plot.Rd
-2d38a6c771aa11db7a65d79a85812bd7 *man/pop.index2.Rd
+c57e47cef50679766af81e16be024133 *man/opt.bin.Rd
+b8f5a018518532c5cc15cc5718516ea5 *man/pop.index.Rd
+2dd49e9e31b3d8a69c58645bdd3cda21 *man/pop.index.plot.Rd
+78a9c39f1b18793a35a99fae809f1ae8 *man/pop.index2.Rd
 c665cd876b4c8291d880ad5963144b9a *man/popind.Rd
 989b0b448090110df28608253bedf050 *man/popind.err.Rd
 7d9cc819dd8ed8ee515b7bb2dd98f010 *man/radiant.Rd
@@ -68,5 +69,5 @@ d17b39c4c134b13cc6e7520a18bd033f *man/rate2015.Rd
 7b4965cbef8d17bfc996f2e5c63ba339 *man/solar.long.Rd
 548c9e28d3aa4a7312bf75a189c8aea4 *man/sollong_date.Rd
 e2f23ee24289ff6bdcd3f79fa3069025 *man/sollong_date.table.Rd
-32612a3383e0ec1ad99d56599bd1ed33 *man/zhr.Rd
-5e2fdfcfd5a9539d340e2ada2ce57bcb *man/zhr.plot.Rd
+ecc52a646d334b9da78c8ce62113fdd3 *man/zhr.Rd
+7e4b805e1b64eda62de81409148014e8 *man/zhr.plot.Rd

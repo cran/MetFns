@@ -7,7 +7,8 @@ Plot of zenithal hourly rate (ZHR)
 for data containing ZHR values and given limits on x and y axes.
 }
 \usage{
-zhr.plot(zhrdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
+zhr.plot(zhrdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc,
+dlim1=NULL,dlim2=NULL,dinc=NULL,dunit=NULL)
 }
 \arguments{
   \item{zhrdata}{
@@ -29,8 +30,21 @@ zhr.plot(zhrdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
   numeric vector specifying maximum value on y-axis.
 }
 \item{yinc}{
-  numeric vector specifying increment between labels on y-axis.
+  c vector specifying increment between labels on y-axis.
 }
+\item{dlim1}{
+  character vector specifying start date on secondary x-axis, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
+}
+\item{dlim2}{
+  character vector specifying end date on secondary x-axis, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
+}
+\item{dinc}{
+  numeric vector specifying increment between labels on secondary x-axis.
+}
+\item{dunit}{
+ character vector specifying unit of increment \code{dinc}. Accepted values are "min" for minute, "h" for hour and "day" for day.
+}
+
 }
 \details{
 \code{zhrdata} represents table of ZHR values calculated using \code{zhr} function.
@@ -54,18 +68,23 @@ Kristina Veljkovic
 }
 \examples{
 ## calculate and make plot of ZHR for observations of 2015 Perseids, time period
-## around maximum, 21th to 25th October, min bin size 0.1 degree, max bin size 1 degree, 
-## number of meteors equals 100 
+## around maximum, 21th to 25th October, min bin size 0.16 degrees (4 hours), 
+## max bin size 1 degree, number of meteors equals 100 
 ## First select rate data for Orionids activity from 21th to 25th October, 
-## limiting magnitudes above 5, radiant elevation above 20 degrees, percentage of clouds below 20
+## limiting magnitudes above 5, radiant elevation above 20 degrees, 
+## percentage of clouds below 20
 ori2015<-filter(rate2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",
 P.up=20,mag.low=5,h.low=20)
-orizhr<-zhr(ori2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",r=2.5,
-kmin=0.1,kmax=1,num=100)
+orizhr<-zhr(ori2015,date.start="2015-10-21",date.end="2015-10-25",shw="ORI",
+r=2.5,kmin=0.16,kmax=1,num=100)
 
 ## make graphic of ZHR
-## x-axis limits: min(sollong)=207.115, max(sollong)=210.276
-## y-axis limits: min(ZHR-st.err)=14.2,max(ZHR+st.err)=22.6
-zhr.plot(orizhr,xlim1=207,xlim2=211,xinc=1,ylim1=14,ylim2=23,yinc=1)
+## x-axis limits: min(sollong)=207.137, max(sollong)=210.276
+## y-axis limits: min(ZHR-st.err)=14.2,max(ZHR+st.err)=21.9
+zhr.plot(orizhr,xlim1=207,xlim2=211,xinc=1,ylim1=14,ylim2=22,yinc=1)
+
+## change date tick marks on secondary x-axis, to show date at midnight
+ zhr.plot(orizhr,xlim1=207,xlim2=211,xinc=1,ylim1=14,ylim2=22,yinc=1,
+ dlim1="2015-10-21",dlim2="2015-10-25",dinc=1,dunit="day")
 
 }

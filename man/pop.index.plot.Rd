@@ -7,7 +7,8 @@ Plot of population index
 for data containing population index values and given limits on x and y axes.
 }
 \usage{
-pop.index.plot(rdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
+pop.index.plot(rdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc,dlim1=NULL,dlim2=NULL,
+dinc=NULL,dunit=NULL)
 }
 \arguments{
   \item{rdata}{
@@ -31,6 +32,18 @@ pop.index.plot(rdata,xlim1,xlim2,xinc,ylim1,ylim2,yinc)
 \item{yinc}{
   numeric vector specifying increment between labels on y-axis.
 }
+\item{dlim1}{
+  character vector specifying start date on secondary x-axis, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
+}
+\item{dlim2}{
+  character vector specifying end date on secondary x-axis, given in \code{"\%Y-\%m-\%d \%H:\%M:\%S"} format (UTC timezone).
+}
+\item{dinc}{
+  numeric vector specifying increment between labels on secondary x-axis.
+}
+\item{dunit}{
+ character vector specifying unit of increment \code{dinc}. Accepted values are "min" for minute, "h" for hour and "day" for day.
+}
 }
 \details{
 \code{rdata} represents table of population index values calculated using functions \code{pop.index} or \code{pop.index2}.
@@ -50,16 +63,21 @@ Kristina Veljkovic
 \code{\link{pop.index}},\code{\link{pop.index2}}
 }
 \examples{
-## calculate and make plot of population index for observations of 2015 Orionids, time period 
-## around maximum, 21th to 25th October, min bin size 0.1 degree, max bin size 1 degrees, 
+## calculate and make plot of population index for observations of 2015 Orionids,
+## time period around maximum, 21th to 25th October, 
+## min bin size 0.16 degrees (4 hours), max bin size 1 degree, 
 ## number of meteors equals 100 
 ## First select magnitude data for Orionids activity from 21th to 25th October, 
-## limiting magnitudes above 5, radiant elevation above 20 degrees, percentage of clouds below 20
+## limiting magnitudes above 5, radiant elevation above 20 degrees, 
+## percentage of clouds below 20
 ori2015mag<-filter(magn2015,date.start="2015-10-21",date.end="2015-10-25",
 shw="ORI",P.up=20,mag.low=5,h.low=20)
 oripop<-pop.index2(ori2015mag,date.start="2015-10-21",date.end="2015-10-25",
-shw="ORI",kmin=0.1,kmax=1,num=100)
-pop.index.plot(oripop,xlim1=207,xlim2=211,xinc=1,ylim1=1.5,ylim2=2.5,yinc=0.2)
+shw="ORI",kmin=0.16,kmax=1,num=100)
+pop.index.plot(oripop,xlim1=207,xlim2=211,xinc=1,ylim1=1.6,ylim2=2.4,yinc=0.2)
 
+## change date tick marks on secondary x-axis, to show date at midnight
+pop.index.plot(oripop,xlim1=207,xlim2=211,xinc=1,ylim1=1.5,ylim2=2.5,
+yinc=0.2,dlim1="2015-10-21",dlim2="2015-10-25",dinc=1,dunit="day")
 }
 

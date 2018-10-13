@@ -9,7 +9,7 @@ zhr<-function(data,date.start,date.end,shw,r=NULL,kmin=0.01,kmax=1,num,c.zhr=0.5
    if(is.null(r)&& is.data.frame(rdata) && (!("sollong"%in%names(rdata))|| !("pop.index"%in%names(rdata))))
       stop("Error: rdata does not contain columns named sollong and pop.index")
       
-   if(!is.numeric(c.zhr) || c.zhr<0 || c.zhr>1)
+   if(!(c.zhr%in%c(0.5,1)))
       stop("Invalid input parameter specification: check value of c.zhr")
   
    if(!is.numeric(gamma) || gamma<1 || gamma>2)
